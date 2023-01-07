@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
+RUN npm install -g npm
+
 RUN npm install -g yarn --force
 
 RUN yarn
