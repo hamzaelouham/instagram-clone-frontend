@@ -2,6 +2,11 @@
 
 # dependencies
 /node_modules
+/k8s
+
+
+
+
 /.pnp
 .pnp.js
 

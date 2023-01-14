@@ -8,8 +8,7 @@ RUN npm install -g npm
 
 RUN npm install -g yarn --force
 
-RUN yarn
-
+RUN yarn install
 
 
 FROM node:16.14-alpine AS builder
@@ -38,4 +37,6 @@ RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
 EXPOSE 3000
+
 CMD [ "yarn", "start" ]
+
