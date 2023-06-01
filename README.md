@@ -25,3 +25,5 @@ cd /k8s && kubectl apply -f deployments/deployment.yaml
 ### create service
 
 cd /k8s && kubectl apply -f services/servce.yaml
+
+### create service that expose external 
