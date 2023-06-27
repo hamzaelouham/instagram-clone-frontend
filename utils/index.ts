@@ -1,4 +1,5 @@
 import React from "react";
+
 export const useClassNames = () => {
   const classNames = (...classes: string[]) =>
     classes.filter(Boolean).join(" ");
@@ -24,4 +25,8 @@ export const useDocumentClicked = () => {
   }, []);
 
   return { clicked };
+};
+
+export const getAuthUser = async (data) => {
+  const response = await fetch(url, options);
 };

@@ -1,11 +1,18 @@
 import type { AppProps } from "next/app";
 import { useState, useEffect } from "react";
+import { SessionProvider } from "next-auth/react";
+import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { ProgressBar } from "../components";
 import "../styles/globals.css";
 import "../styles/style.css";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({
+  Component,
+  pageProps,
+}: AppProps<{
+  session: Session;
+}>) {
   const [isProgress, setIsProgress] = useState<boolean>(false);
   const router = useRouter();
 
@@ -31,7 +38,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ProgressBar isAnimating={isProgress} />
-      <Component {...pageProps} />
+      <SessionProvider session={pageProps.session}>
+        <Component {...pageProps} />
+      </SessionProvider>
     </>
   );
 }

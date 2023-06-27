@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nextjs-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nextjs-app
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: nextjs-app
-          image: hamzaelouham/insta-clone
+          image: hamzaelouham/insta-clone:latest
           ports:
             - containerPort: 3000

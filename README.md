@@ -25,3 +25,9 @@ cd /k8s && kubectl apply -f deployments/deployment.yaml
 ### create service
 
 cd /k8s && kubectl apply -f services/servce.yaml
+
+### using minikube
+
+minikube start
+
+minikube addons enable ingress
