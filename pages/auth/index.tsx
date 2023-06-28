@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 
 interface formValues {
   email: string;
@@ -14,10 +14,15 @@ interface formValues {
 const Login: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const router = useRouter();
-  const onSubmit = (values: formValues) => {
-    //apollo logic here
-    router.push("/home");
+  const onSubmit = async (values: formValues) => {
+    setLoading(true);
+    await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: true,
+      callbackUrl: `${window.location.origin}/`,
+    });
+    setLoading(false);
   };
 
   const validation = yup.object().shape({

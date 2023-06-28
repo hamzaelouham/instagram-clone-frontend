@@ -7,10 +7,12 @@ export default NextAuth({
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
+        email: { label: "email", type: "email", placeholder: "email" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
+        console.log(credentials);
+
         const isUser = null;
         if (isUser) {
           return isUser;
