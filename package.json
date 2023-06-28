@@ -12,6 +12,7 @@
     "@tanem/react-nprogress": "^5.0.12",
     "formik": "^2.2.9",
     "next": "^12.3.4",
+    "next-auth": "^4.22.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "tailwind-scrollbar-hide": "^1.1.7",

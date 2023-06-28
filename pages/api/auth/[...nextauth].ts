@@ -11,6 +11,7 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
+        const isUser = null;
         if (isUser) {
           return isUser;
         } else {
