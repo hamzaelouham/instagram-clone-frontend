@@ -1,4 +1,5 @@
 import type { AppProps } from "next/app";
+import { ApolloProvider } from "@apollo/client";
 import { useState, useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
@@ -6,6 +7,7 @@ import { useRouter } from "next/router";
 import { ProgressBar } from "../components";
 import "../styles/globals.css";
 import "../styles/style.css";
+import { useApollo } from "../utils/apollo";
 
 function MyApp({
   Component,
@@ -15,6 +17,8 @@ function MyApp({
 }>) {
   const [isProgress, setIsProgress] = useState<boolean>(false);
   const router = useRouter();
+  //@ts-ignore
+  const store = useApollo(pageProps.initialApolloState);
 
   useEffect(() => {
     const start = () => {
@@ -37,10 +41,12 @@ function MyApp({
 
   return (
     <>
-      <ProgressBar isAnimating={isProgress} />
-      <SessionProvider session={pageProps.session}>
-        <Component {...pageProps} />
-      </SessionProvider>
+      <ApolloProvider client={store}>
+        <ProgressBar isAnimating={isProgress} />
+        <SessionProvider session={pageProps.session}>
+          <Component {...pageProps} />
+        </SessionProvider>
+      </ApolloProvider>
     </>
   );
 }

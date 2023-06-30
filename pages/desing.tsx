@@ -1,4 +1,6 @@
 import type { NextPage } from "next";
+import { initApollo } from "../utils/apollo";
+import { gql } from "@apollo/client";
 
 const DesingPage: NextPage = () => {
   return (
@@ -46,3 +48,13 @@ const DesingPage: NextPage = () => {
 };
 
 export default DesingPage;
+
+export async function getServerSideProps() {
+  const apollo = initApollo();
+  await apollo.query({ query: gql`` });
+  return {
+    props: {
+      initialApolloState: apollo.cache.extract(),
+    },
+  };
+}

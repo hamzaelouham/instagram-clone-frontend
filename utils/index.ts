@@ -27,6 +27,32 @@ export const useDocumentClicked = () => {
   return { clicked };
 };
 
-export const getAuthUser = async (data) => {
-  const response = await fetch(url, options);
+export const Auth = async (url: string, data: any) => {
+  const response = await fetch(url, {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+
+    body: JSON.stringify({
+      query: `mutation Login($email: String!, $password: String!) {
+      login(email: $email, password: $password) {
+        accessToken  
+      }
+     }`,
+      variables: {
+        email: data.email,
+        password: data.password,
+      },
+    }),
+  });
+
+  return await response.json();
 };
+
+// `mutation Login($email: String!, $password: String!) {
+//   login(email: $email, password: $password) {
+//    accessToken
+//   }
+// }`;
