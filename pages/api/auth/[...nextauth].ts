@@ -1,6 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { Login } from "../../../utils/";
+import { JWT } from "next-auth/jwt";
+import { User } from "../../../utils/types/next-auth";
 
 export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
@@ -18,7 +20,7 @@ export default NextAuth({
         );
 
         if (!response.data) return null;
-
+       
         if (response.data.login) {
           return response.data.login;
         } else {
@@ -30,6 +32,31 @@ export default NextAuth({
   pages: {
     signIn: "/auth/",
   },
+  callbacks: {
+    //@ts-ignore
+    async jwt({ token, user }: { token: JWT; user?: User }) {
+      if (user?.userId) {
+        token.accessToken = user.accessToken;
+        token.email = user.email;
+        token.name = user.name;
+        token.userId = user.userId;
+        token.image = user.image;
+      }
+
+      return token;
+    },
+
+    async session({ session, token }) {
+      session!.user!.accessToken = token.accessToken;
+      session!.user!.userId = token.userId;
+      session!.user!.email = token.email;
+      session!.user!.name = token.name;
+      session!.user!.image = token.image;
+
+      return session;
+    },
+  },
+
   session: {
     strategy: "jwt",
   },
