@@ -5,6 +5,7 @@ import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import Head from "next/head";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 interface formValues {
   email: string;
@@ -13,16 +14,27 @@ interface formValues {
 
 const Login: NextPage = () => {
   const [loading, setLoading] = React.useState<boolean>(false);
-
+  const router = useRouter();
   const onSubmit = async (values: formValues) => {
-    setLoading(true);
-    await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: true,
-      callbackUrl: `${window.location.origin}/`,
-    });
-    setLoading(false);
+    try {
+      setLoading(true);
+      const res = await signIn("credentials", {
+        email: values.email,
+        password: values.password,
+        redirect: false,
+        callbackUrl: `${window.location.origin}/`,
+      });
+
+      if (!res?.error && res?.ok) {
+        router.push(res.url as string);
+      } else {
+        console.log("login failed ");
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const validation = yup.object().shape({

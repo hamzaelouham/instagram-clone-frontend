@@ -14,15 +14,15 @@ export default NextAuth({
         password: { label: "password", type: "password" },
       },
       async authorize(credentials, req) {
-        const response = await Login(
+        const { data } = await Login(
           process.env.NEXT_PUBLIC_GRAPHQL_URI!,
           credentials
         );
 
-        if (!response.data) return null;
-       
-        if (response.data.login) {
-          return response.data.login;
+        if (!data) return null;
+
+        if (data.login) {
+          return data.login;
         } else {
           return null;
         }
@@ -34,7 +34,7 @@ export default NextAuth({
   },
   callbacks: {
     //@ts-ignore
-    async jwt({ token, user }: { token: JWT; user?: User }) {
+    async jwt({ token, user }: { token: JWT; user: User }) {
       if (user?.userId) {
         token.accessToken = user.accessToken;
         token.email = user.email;

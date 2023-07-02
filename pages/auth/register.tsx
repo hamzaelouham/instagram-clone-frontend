@@ -4,6 +4,9 @@ import Link from "next/link";
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import Head from "next/head";
+import { useMutation } from "@apollo/client";
+import { REGISTER_MUTATION } from "../../utils/mutations";
+import { useRouter } from "next/router";
 
 interface formValues {
   fullName: string;
@@ -13,10 +16,24 @@ interface formValues {
 }
 
 const Register: NextPage = () => {
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const router = useRouter();
+  const [register, { loading }] = useMutation(REGISTER_MUTATION);
+
   const onSubmit = (values: formValues) => {
-    //apollo logic here
-    console.log(values);
+    register({
+      variables: {
+        name: values.userName,
+        fullname: values.fullName,
+        password: values.password,
+        email: values.email,
+      },
+      onCompleted: () => {
+        router.push("/auth/");
+      },
+      onError: (e) => {
+        alert(e.message);
+      },
+    });
   };
 
   const validation = yup.object().shape({

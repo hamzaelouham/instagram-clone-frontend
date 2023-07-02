@@ -7,11 +7,3 @@ export const LoginQuery = gql`
     }
   }
 `;
-
-export const RegisterQuery = gql`
-  mutation Register($data: RegisterInput) {
-    register(data: $data) {
-      id
-    }
-  }
-`;
