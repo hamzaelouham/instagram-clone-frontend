@@ -9,8 +9,6 @@ export const HomeContent: React.FC = () => {
           {/* max-w-[470px] */}
           <Stories />
           <Posts />
-          <Posts />
-          <Posts />
         </section>
         <section className="hidden lg:inline-grid lg:col-span-1">
           <div className="mt-12">

@@ -33,7 +33,7 @@ export const Post = ({
     <div className="bg-white dark:bg-dark dark:text-white my-7 border dark:border-none rounded-sm">
       <div className="flex items-center p-5">
         <img
-          src={userImag}
+          src={userImag || `/images/avatars/default.png`}
           alt={username}
           className="rounded-full h-12 w-12 object-contain border p-1 mr-3"
         />
