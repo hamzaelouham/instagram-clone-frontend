@@ -8,6 +8,7 @@ import { ProgressBar } from "../components";
 import "../styles/globals.css";
 import "../styles/style.css";
 import { useApollo } from "../utils/apollo";
+import { Toaster } from "react-hot-toast";
 
 function MyApp({
   Component,
@@ -18,7 +19,7 @@ function MyApp({
   const [isProgress, setIsProgress] = useState<boolean>(false);
   const router = useRouter();
   //@ts-ignore
-  const store = useApollo(pageProps.initialApolloState);
+  const apollo = useApollo(pageProps.initialApolloState);
 
   useEffect(() => {
     const start = () => {
@@ -41,9 +42,11 @@ function MyApp({
 
   return (
     <>
-      <ApolloProvider client={store}>
+      <ApolloProvider client={apollo}>
         <ProgressBar isAnimating={isProgress} />
+
         <SessionProvider session={pageProps.session}>
+          <Toaster position="top-right" reverseOrder={false} />
           <Component {...pageProps} />
         </SessionProvider>
       </ApolloProvider>

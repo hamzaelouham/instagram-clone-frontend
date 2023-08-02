@@ -6,6 +6,7 @@ import * as yup from "yup";
 import Head from "next/head";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 interface formValues {
   email: string;
@@ -26,12 +27,14 @@ const Login: NextPage = () => {
       });
 
       if (!res?.error && res?.ok) {
+        toast.success("Successfully logged!");
+
         router.push(res.url as string);
       } else {
-        console.log("login failed ");
+        toast.error("login failed !");
       }
     } catch (e) {
-      console.log(e);
+      toast.error("login failed !");
     } finally {
       setLoading(false);
     }
