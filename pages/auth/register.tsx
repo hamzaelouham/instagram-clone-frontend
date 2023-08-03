@@ -7,6 +7,7 @@ import Head from "next/head";
 import { useMutation } from "@apollo/client";
 import { REGISTER_MUTATION } from "../../utils/mutations";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 interface formValues {
   fullName: string;
@@ -28,10 +29,11 @@ const Register: NextPage = () => {
         email: values.email,
       },
       onCompleted: () => {
+        toast.success("Successfully registered !");
         router.push("/auth/");
       },
       onError: (e) => {
-        alert(e.message);
+        toast.error(e.message);
       },
     });
   };

@@ -1,19 +1,22 @@
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export const MiniProfile = () => {
+  const { data } = useSession();
+
   return (
     <div className="flex flex-row items-center justify-between mb-[10px]">
       <img
-        src="/images/avatars/default.png"
+        src={data?.user?.image || "/images/avatars/default.png"}
         alt="gfg"
         className="rounded-full w-14 h-14"
       />
       <div className="flex flex-col justify-center ml-3 flex-auto">
         <div className="text-sm font-sans font-semibold line-h-sm  text-black dark:text-white">
-          hz__egalehamza
+          {data?.user?.name}
         </div>
         <p className="text-sm font-sans font-normal text-gray-400  dark:text-gray-300 line-h-sm">
-          Hamza El ouham
+          {data?.user?.email.split("@")[0]}
         </p>
       </div>
 

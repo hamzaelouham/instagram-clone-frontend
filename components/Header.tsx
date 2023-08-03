@@ -16,8 +16,10 @@ import {
 } from "./";
 import { Menu } from "@headlessui/react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 export const Header: React.FC = () => {
+  const { data } = useSession();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
 
@@ -86,7 +88,7 @@ export const Header: React.FC = () => {
               <Menu as="div" className="relative inline-block">
                 <Menu.Button className="cursor-pointerfocus:outline-none">
                   <img
-                    src="/images/avatars/default.png"
+                    src={data?.user?.image || "/images/avatars/default.png"}
                     alt="avatar"
                     className="h-6 w-6 rounded-full cursor-pointer"
                   />
