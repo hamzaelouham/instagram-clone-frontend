@@ -54,3 +54,18 @@ export const Login = async (url: string, data: any) => {
 
   return await response.json();
 };
+// let data = [];
+// let post = {};
+// nodes.forEach((ele) => {
+//   post = {
+//     imageUrl: ele.querySelector("img").src,
+//     coption: ele.querySelector("img").get,
+//   };
+//   data.append(post);
+// });
+
+// nodes.forEach((ele) => {
+//   const image = ele.querySelector("img");
+//   console.log(image);
+//   console.log(image.getAttribute("src"));
+// });
