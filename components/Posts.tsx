@@ -1,19 +1,22 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
 import { InView } from "react-intersection-observer";
-import { Post } from "./";
+import { Post, Spiner } from "./";
 import { GET_POST } from "../utils/queries";
-import { LoadingComponent } from "./LoadingComponent";
 
 export const Posts = () => {
-  const { loading, error, data, fetchMore } = useQuery(GET_POST, {
-    variables: { first: 2 },
-  });
+  const { loading, error, data, networkStatus, fetchMore } = useQuery(
+    GET_POST,
+    {
+      variables: { first: 2 },
+      notifyOnNetworkStatusChange: true,
+    }
+  );
 
   const hasNextPage = data?.posts?.pageInfo?.hasNextPage;
   const endCursor = data?.posts?.pageInfo?.endCursor;
 
-  if (loading) return <>Loading...</>;
+  if (loading) return <Spiner />;
   if (error) return <>Error! {error.message}</>;
 
   return (
@@ -28,7 +31,7 @@ export const Posts = () => {
           coption={node.caption}
         />
       ))}
-
+      {networkStatus === 3 && <Spiner />}
       {hasNextPage ? (
         <InView
           onChange={(inView) => {

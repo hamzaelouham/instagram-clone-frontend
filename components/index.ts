@@ -25,3 +25,4 @@ export * from "./model/profile-model";
 export * from "./model/Model";
 export * from "./Grid/grid-normal";
 export * from "./Grid/grid-reverse";
+export * from "./Spiner";
