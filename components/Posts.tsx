@@ -1,42 +1,56 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+import { InView } from "react-intersection-observer";
 import { Post } from "./";
 import { GET_POST } from "../utils/queries";
-
-// const posts = [
-//   {
-//     id: 123,
-//     username: "amaza",
-//     userImag: "/images/avatars/default.png",
-//     Imag: "/images/users/raphael/1.jpg",
-//     coption: "hello from react instagram chellonges",
-//   },
-//   {
-//     id: 124,
-//     username: "hamza",
-//     userImag: "/images/avatars/dali.jpg",
-//     Imag: "/images/users/raphael/2.jpg",
-//     coption: "hello from react instagram chellonges",
-//   },
-// ];
+import { LoadingComponent } from "./LoadingComponent";
 
 export const Posts = () => {
-  const { loading, error, data } = useQuery(GET_POST);
+  const { loading, error, data, fetchMore } = useQuery(GET_POST, {
+    variables: { first: 2 },
+  });
+
+  const hasNextPage = data?.posts?.pageInfo?.hasNextPage;
+  const endCursor = data?.posts?.pageInfo?.endCursor;
 
   if (loading) return <>Loading...</>;
   if (error) return <>Error! {error.message}</>;
+
   return (
     <div>
-      {data.getAllPosts.map((post: any) => (
+      {data?.posts.edges.map(({ node }: any) => (
         <Post
-          key={post.id}
-          postId={post.id}
-          username={post?.author?.name}
-          Imag={post?.imageUrl}
-          userImag={post?.author.image}
-          coption={post.caption}
+          key={node.id}
+          postId={node.id}
+          username={node?.author?.name}
+          Imag={node?.imageUrl}
+          userImag={node?.author.image}
+          coption={node.caption}
         />
       ))}
+
+      {hasNextPage ? (
+        <InView
+          onChange={(inView) => {
+            if (inView) {
+              fetchMore({
+                variables: { after: endCursor },
+                updateQuery: (prevResult, { fetchMoreResult }) => {
+                  fetchMoreResult.posts.edges = [
+                    ...prevResult.posts.edges,
+                    ...fetchMoreResult.posts.edges,
+                  ];
+                  return fetchMoreResult;
+                },
+              });
+            }
+          }}
+        />
+      ) : (
+        <p className="my-10 text-center font-medium">
+          You've reached the end!{" "}
+        </p>
+      )}
     </div>
   );
 };
