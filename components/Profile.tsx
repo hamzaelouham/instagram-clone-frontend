@@ -21,7 +21,7 @@ export const MiniProfile = () => {
       </div>
 
       <button className="text-blue-500 hover:text-blue-400 transition text-sm font-sans font-medium line-h-sm">
-        <Link href="/"> Switch</Link>
+        <Link href="/">Switch</Link>
       </button>
     </div>
   );

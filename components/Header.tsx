@@ -86,7 +86,7 @@ export const Header: React.FC = () => {
 
               <HeartIcon className="icons " />
               <Menu as="div" className="relative inline-block">
-                <Menu.Button className="cursor-pointerfocus:outline-none">
+                <Menu.Button className="cursor-pointer focus:outline-none">
                   <img
                     src={data?.user?.image || "/images/avatars/default.png"}
                     alt="avatar"

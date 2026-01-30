@@ -60,7 +60,7 @@ const Register: NextPage = () => {
       </Head>
       <main className="flex flex-grow mb-4">
         <article className="flex justify-center  flex-row mx-auto mt-8">
-          <div className="hidden iamge-phone md:inline-flex flex-shrink-0">
+          <div className="hidden image-phone md:inline-flex flex-shrink-0">
             <div className="mt-[27px] mr-0 mb-0 ml-[113px] relative">
               <img
                 alt=""
@@ -115,8 +115,7 @@ const Register: NextPage = () => {
                       />
                       <button
                         type="submit"
-                        className={`insta-btn mx-8 mt-2 mb-2  ${
-                          !!errors.email ||
+                        className={`insta-btn mx-8 mt-2 mb-2  ${!!errors.email ||
                           !!errors.fullName ||
                           !touched.fullName ||
                           !touched.email ||
@@ -125,9 +124,9 @@ const Register: NextPage = () => {
                           !touched.password ||
                           !!errors.password ||
                           loading
-                            ? "cursor-not-allowed"
-                            : "acive-btn"
-                        }`}
+                          ? "cursor-not-allowed"
+                          : "acive-btn"
+                          }`}
                         disabled={
                           !!errors.email ||
                           !!errors.fullName ||
@@ -135,7 +134,7 @@ const Register: NextPage = () => {
                           !!errors.password
                         }
                       >
-                        {loading ? "loading..." : "Sign In"}
+                        {loading ? "loading..." : "Sign Up"}
                       </button>
 
                       <div className="flex flex-row justify-center items-center mx-[40px] mt-[10px] mb-[18px]">
@@ -175,10 +174,10 @@ const Register: NextPage = () => {
             <div className="md:bg-white flex items-center justify-center border border-gray-200 rounded-sm mb-[10px] py-[10px]">
               <div>
                 <p className="m-4 text-sm text-center">
-                  Vous avez un compte ?
+                  Have an account?
                   <Link href="/auth/">
                     <span className="text-blue-500 font-semibold cursor-pointer">
-                      Connectez-vous
+                      Log In
                     </span>
                   </Link>
                 </p>

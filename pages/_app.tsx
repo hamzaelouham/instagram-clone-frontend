@@ -18,8 +18,7 @@ function MyApp({
 }>) {
   const [isProgress, setIsProgress] = useState<boolean>(false);
   const router = useRouter();
-  //@ts-ignore
-  const apollo = useApollo(pageProps.initialApolloState);
+  const apollo = useApollo((pageProps as any).initialApolloState);
 
   useEffect(() => {
     const start = () => {

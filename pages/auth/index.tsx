@@ -58,7 +58,7 @@ const Login: NextPage = () => {
       </Head>
       <main className="flex flex-grow mb-4">
         <article className="flex justify-center  flex-row mx-auto mt-8">
-          <div className="iamge-phone h-full hidden md:inline-flex flex-shrink-0">
+          <div className="image-phone h-full hidden md:inline-flex flex-shrink-0">
             <div className="mt-[27px] mr-0 mb-0 ml-[113px] relative">
               <img
                 alt=""
@@ -101,18 +101,17 @@ const Login: NextPage = () => {
                       />
                       <button
                         type="submit"
-                        className={`insta-btn mx-8 mt-2 mb-2  ${
-                          !!errors.email ||
+                        className={`insta-btn mx-8 mt-2 mb-2  ${!!errors.email ||
                           !touched.email ||
                           !touched.password ||
                           !!errors.password ||
                           loading
-                            ? "cursor-not-allowed"
-                            : "acive-btn"
-                        }`}
+                          ? "cursor-not-allowed"
+                          : "acive-btn"
+                          }`}
                         disabled={!!errors.email || !!errors.password}
                       >
-                        {loading ? "loading..." : "Sign Up"}
+                        {loading ? "loading..." : "Log In"}
                       </button>
 
                       <div className="flex flex-row justify-center items-center mx-[40px] mt-[10px] mb-[18px]">
@@ -152,10 +151,10 @@ const Login: NextPage = () => {
             <div className="md:bg-white flex items-center justify-center border border-gray-200 rounded-sm mb-[10px] py-[10px]">
               <div>
                 <p className="m-4 text-sm text-center">
-                  Vous n’avez pas de compte ?
+                  Don't have an account?
                   <Link href="/auth/register">
                     <span className="text-blue-500 font-semibold cursor-pointer">
-                      Inscrivez-vous
+                      Sign Up
                     </span>
                   </Link>
                 </p>

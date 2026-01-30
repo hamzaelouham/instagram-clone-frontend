@@ -27,7 +27,7 @@ export const useDocumentClicked = () => {
   return { clicked };
 };
 
-export const Login = async (url: string, data: any) => {
+export const Login = async (url: string, data: Record<string, any>) => {
   const response = await fetch(url, {
     method: "POST",
 
@@ -39,7 +39,7 @@ export const Login = async (url: string, data: any) => {
       query: `mutation Login($email: String!, $password: String!) {
       login(email: $email, password: $password) {
         email
-        iamge
+        image
         name
         userId 
         accessToken

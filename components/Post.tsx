@@ -12,17 +12,17 @@ import { HeartIcon as FillHeartIcon } from "@heroicons/react/solid";
 interface postProps {
   postId: string | number;
   username: string;
-  Imag: string;
-  userImag: string;
-  coption: string;
+  imageUrl: string;
+  userImage: string;
+  caption: string;
 }
 
 export const Post = ({
   postId,
   username,
-  userImag,
-  Imag,
-  coption,
+  userImage,
+  imageUrl,
+  caption,
 }: postProps) => {
   const [liked, setLiked] = React.useState<boolean>(false);
   const likePost = () => {
@@ -33,7 +33,7 @@ export const Post = ({
     <div className="bg-white dark:bg-dark dark:text-white my-7 border dark:border-none rounded-sm">
       <div className="flex items-center p-5">
         <img
-          src={userImag || `/images/avatars/default.png`}
+          src={userImage || `/images/avatars/default.png`}
           alt={username}
           className="rounded-full h-12 w-12 object-contain border p-1 mr-3"
         />
@@ -41,8 +41,8 @@ export const Post = ({
         <DotsHorizontalIcon className="h-5 cursor-pointer" />
       </div>
       <img
-        src={Imag}
-        alt={coption}
+        src={imageUrl}
+        alt={caption}
         className="w-full h-[400px] md:h-[450px] object-cover"
       />
       <div className="flex justify-between px-4 pt-4">
@@ -62,10 +62,9 @@ export const Post = ({
         <BookmarkIcon className="btn" />
       </div>
 
-      {/* coption */}
       <p className="p-5 truncate">
         <span className="font-bold mr-1">{username}</span>
-        {coption}
+        {caption}
       </p>
 
       {/* comment */}

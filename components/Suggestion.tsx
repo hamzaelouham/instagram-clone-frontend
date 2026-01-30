@@ -3,7 +3,7 @@ export const Suggestion = () => {
     <div className=" flex flex-col ">
       <div className="flex flex-row justify-between items-center pl-4 py-1 ">
         <h2 className="font-bold text-sm text-gray-400">
-          Suggestions pour vous
+          Suggestions For You
         </h2>
         <button className="text-xs font-semibold line-h-sm text-black dark:text-white ring-0">
           See all
@@ -39,7 +39,7 @@ export const Suggestion = () => {
               nouhaila.nouhaila18
             </h2>
             <p className="font-normal text-xs text-gray-400">
-              Débute sur Instagram
+              New to Instagram
             </p>
           </div>
           <button className="text-blue-400 hover:text-blue-500 transition text-sm font-sans font-medium line-h-sm">

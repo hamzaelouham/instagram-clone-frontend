@@ -12,7 +12,7 @@ export const GET_POST = gql`
 
           author {
             name
-            iamge
+            image
           }
         }
       }
