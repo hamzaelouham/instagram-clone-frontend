@@ -39,7 +39,7 @@ export async function startApolloServer(port: string | number) {
 
   await server.start();
   server.applyMiddleware({
-    app,
+    app: app as any,
     path: "/graphql",
   });
 

@@ -30,7 +30,7 @@ class Post {
       return null;
     }
   }
-  async updatePost(_: any, args: any, ctx: context) {}
+  async updatePost(_: any, args: any, ctx: context) { }
 
   async getAllPosts(ctx: context) {
     const posts = await ctx.db.post.findMany({
@@ -98,7 +98,7 @@ class Post {
           endCursor: cursor,
           hasNextPage: secondQueryResult.length >= args.first,
         },
-        edges: queryResult.map((post) => ({
+        edges: queryResult.map((post: any) => ({
           cursor: post.id,
           node: post,
         })),

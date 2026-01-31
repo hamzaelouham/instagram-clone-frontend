@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../src/generated/client";
 
 // add prisma to the NodeJS global type
 // TODO : downgraded @types/node to 15.14.1 to avoid error on NodeJS.Global
@@ -24,15 +24,15 @@ const prisma = new PrismaClient({
   ],
 })
 
-prisma.$on('warn', (e) => {
+prisma.$on('warn', (e: any) => {
   console.log(e)
 })
 
-prisma.$on('info', (e) => {
+prisma.$on('info', (e: any) => {
   console.log(e)
 })
 
-prisma.$on('error', (e) => {
+prisma.$on('error', (e: any) => {
   console.log(e)
 })
 

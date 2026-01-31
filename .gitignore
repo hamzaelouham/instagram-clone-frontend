@@ -40,7 +40,9 @@ next-env.d.ts
 .pnp.js
 
 
-
+/backend/node_modules
+/.pnp
+.pnp.js
 
 
 /out/

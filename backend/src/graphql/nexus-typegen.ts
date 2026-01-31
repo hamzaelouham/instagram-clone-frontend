@@ -56,7 +56,7 @@ export interface NexusGenObjects {
   Me: { // root type
     email?: string | null; // String
     fullname?: string | null; // String
-    iamge?: string | null; // String
+    image?: string | null; // String
     name?: string | null; // String
     userId?: string | null; // String
   }
@@ -82,7 +82,7 @@ export interface NexusGenObjects {
     accessToken?: string | null; // String
     email?: string | null; // String
     fullname?: string | null; // String
-    iamge?: string | null; // String
+    image?: string | null; // String
     name?: string | null; // String
     userId?: string | null; // String
   }
@@ -90,8 +90,8 @@ export interface NexusGenObjects {
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     fullname?: string | null; // String
-    iamge?: string | null; // String
     id?: string | null; // String
+    image?: string | null; // String
     name?: string | null; // String
     password?: string | null; // String
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
@@ -124,7 +124,7 @@ export interface NexusGenFieldTypes {
   Me: { // field return type
     email: string | null; // String
     fullname: string | null; // String
-    iamge: string | null; // String
+    image: string | null; // String
     name: string | null; // String
     userId: string | null; // String
   }
@@ -166,7 +166,7 @@ export interface NexusGenFieldTypes {
     accessToken: string | null; // String
     email: string | null; // String
     fullname: string | null; // String
-    iamge: string | null; // String
+    image: string | null; // String
     name: string | null; // String
     userId: string | null; // String
   }
@@ -176,8 +176,8 @@ export interface NexusGenFieldTypes {
     followers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     following: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     fullname: string | null; // String
-    iamge: string | null; // String
     id: string | null; // String
+    image: string | null; // String
     name: string | null; // String
     password: string | null; // String
     posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
@@ -201,7 +201,7 @@ export interface NexusGenFieldTypeNames {
   Me: { // field return type name
     email: 'String'
     fullname: 'String'
-    iamge: 'String'
+    image: 'String'
     name: 'String'
     userId: 'String'
   }
@@ -243,7 +243,7 @@ export interface NexusGenFieldTypeNames {
     accessToken: 'String'
     email: 'String'
     fullname: 'String'
-    iamge: 'String'
+    image: 'String'
     name: 'String'
     userId: 'String'
   }
@@ -253,8 +253,8 @@ export interface NexusGenFieldTypeNames {
     followers: 'User'
     following: 'User'
     fullname: 'String'
-    iamge: 'String'
     id: 'String'
+    image: 'String'
     name: 'String'
     password: 'String'
     posts: 'Post'

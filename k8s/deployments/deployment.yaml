@@ -18,7 +18,8 @@ spec:
         - name: nextjs-app
           image: hamzaelouham/insta-clone:latest
           ports:
-            - containerPort: 3000
+            - name: http
+              containerPort: 3000
           resources:
             limits:
               cpu: "500m"
@@ -26,15 +27,23 @@ spec:
             requests:
               cpu: "250m"
               memory: "256Mi"
+          startupProbe:
+            httpGet:
+              path: /api/health
+              port: http
+            failureThreshold: 30
+            periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /api/auth/session
-              port: 3000
+              path: /api/health
+              port: http
             initialDelaySeconds: 5
             periodSeconds: 10
+            failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /api/auth/session
-              port: 3000
-            initialDelaySeconds: 15
+              path: /api/health
+              port: http
+            initialDelaySeconds: 10
             periodSeconds: 20
+            failureThreshold: 3

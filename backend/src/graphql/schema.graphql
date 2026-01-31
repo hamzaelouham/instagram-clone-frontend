@@ -22,7 +22,7 @@ type Edge {
 type Me {
   email: String
   fullname: String
-  iamge: String
+  image: String
   name: String
   userId: String
 }
@@ -70,7 +70,7 @@ type Session {
   accessToken: String
   email: String
   fullname: String
-  iamge: String
+  image: String
   name: String
   userId: String
 }
@@ -81,8 +81,8 @@ type User {
   followers: [User]
   following: [User]
   fullname: String
-  iamge: String
   id: String
+  image: String
   name: String
   password: String
   posts: [Post]

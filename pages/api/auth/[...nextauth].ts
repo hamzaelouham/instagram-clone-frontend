@@ -13,7 +13,9 @@ export default NextAuth({
         email: { label: "email", type: "email", placeholder: "email" },
         password: { label: "password", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials) {
+        if (!credentials) return null;
+
         const { data } = await Login(
           process.env.NEXT_PUBLIC_GRAPHQL_URI!,
           credentials
