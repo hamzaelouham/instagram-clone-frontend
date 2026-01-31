@@ -24,11 +24,15 @@ export async function startApolloServer(port: string | number) {
 
   const server = new ApolloServer({
     schema: applyMiddleware(schema, permissions),
-    context: ({ req, res }) => ({
-      req,
-      res,
-      db: prisma,
-    }),
+    context: ({ req, res }) => {
+      console.log("Request Query:", req.body?.operationName || "Unknown");
+      console.log("Auth Header:", req.headers.authorization ? "Present" : "Missing");
+      return {
+        req,
+        res,
+        db: prisma,
+      };
+    },
     csrfPrevention: true,
     cache: "bounded",
     plugins: [

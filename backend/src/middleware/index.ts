@@ -31,7 +31,7 @@ export function setAuthUser(req: Request, res: Response, next: NextFunction) {
       //@ts-ignore
       req.user = payload;
     } catch (err) {
-      console.log(err);
+      console.log("Auth error:", err);
     }
   }
 

@@ -29,6 +29,9 @@ export const Posts = () => {
           imageUrl={node?.imageUrl}
           userImage={node?.author.image}
           caption={node.caption}
+          likesCount={node.likesCount}
+          hasLiked={node.hasLiked}
+          comments={node.comments}
         />
       ))}
       {networkStatus === 3 && <Spinner />}

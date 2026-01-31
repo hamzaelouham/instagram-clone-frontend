@@ -25,6 +25,7 @@ model User {
   Post      Post[]
   Comment   Comment[]
   stories   Story[]
+  likes     Like[]
 }
 
 model Story {
@@ -46,6 +47,18 @@ model Post {
   author     User      @relation(fields: [authorId], references: [id])
   authorId   String
   comments   Comment[]
+  likes      Like[]
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+
+  @@unique([userId, postId])
 }
 
 model Comment {

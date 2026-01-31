@@ -4,13 +4,11 @@ import { useQuery } from "@apollo/client";
 import { GET_STORIES } from "../utils/queries";
 
 export const Stories: React.FC = () => {
-  const { data, loading } = useQuery(GET_STORIES);
+  const { data, loading, error } = useQuery(GET_STORIES);
 
-  // If loading or no data, maybe show skeletons or nothing?
-  // For now, let's just render what we have.
-
-  // Also, we might want to show the current user's avatar as the first story to 'Add Story'.
-  // But for now, let's just list the fetched stories.
+  if (error) {
+    return <div className="p-4 text-xs text-gray-400 italic">Unable to load stories</div>;
+  }
 
   const stories = data?.getStories || [];
 

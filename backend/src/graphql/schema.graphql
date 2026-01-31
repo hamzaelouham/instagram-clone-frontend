@@ -28,12 +28,15 @@ type Me {
 }
 
 type Mutation {
+  addComment(postId: String!, text: String!): Comment
   createPost(caption: String, imageUrl: String!): Post
   createStory(imageUrl: String!): Story
   deletePost(id: String!): Post
+  followUser(userId: String!): User!
   likePost(id: String!): Post
   login(email: String!, password: String!): Session!
   register(email: String!, fullname: String, name: String, password: String!): User!
+  toggleLike(id: String!): Post
   unlikePost(id: String!): Post
 }
 
@@ -47,6 +50,7 @@ type Post {
   caption: String
   comments: [Comment]
   createdAt: DateTime
+  hasLiked: Boolean
   id: String
   imageUrl: String
   likesCount: Int
@@ -57,6 +61,7 @@ type Query {
   getAllPosts: [Post]
   getPost(id: ID!): Post
   getStories: [Story]
+  getSuggestions: [User]
   getUserById(id: ID!): User
   getUsers: [User]
   me: Me

@@ -25,11 +25,13 @@ class StoryService {
     }
 
     async getStories(ctx: context) {
+        console.log("getStories called. User:", ctx.req.user?.email);
         if (!ctx.req.user) {
             throw new Error("You must be logged in to view stories");
         }
 
         const now = new Date();
+        console.log("Current time:", now);
 
         // Get stories from users verification follows? 
         // For now, let's just get stories from all users to keep it simple and populate the UI, 

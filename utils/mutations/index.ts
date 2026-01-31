@@ -17,3 +17,35 @@ export const REGISTER_MUTATION = gql`
     }
   }
 `;
+
+export const FOLLOW_USER_MUTATION = gql`
+  mutation FollowUser($userId: String!) {
+    followUser(userId: $userId) {
+      id
+    }
+  }
+`;
+
+export const TOGGLE_LIKE_MUTATION = gql`
+  mutation ToggleLike($id: String!) {
+    toggleLike(id: $id) {
+      id
+      likesCount
+      hasLiked
+    }
+  }
+`;
+
+export const ADD_COMMENT_MUTATION = gql`
+  mutation AddComment($text: String!, $postId: String!) {
+    addComment(text: $text, postId: $postId) {
+      id
+      text
+      author {
+        id
+        name
+        image
+      }
+    }
+  }
+`;

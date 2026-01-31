@@ -90,6 +90,10 @@ export const userQuery = extendType({
         },
         resolve: async (_, args, ctx) => await User.getUserById(args.id, ctx),
       }),
+      t.list.field("getSuggestions", {
+        type: "User",
+        resolve: async (_, __, ctx: context) => await User.getSuggestions(ctx),
+      }),
       t.field("me", {
         type: "Me",
         resolve: (_, __, ctx) => {
@@ -120,6 +124,15 @@ export const userMutation = extendType({
         args: { email: nonNull(stringArg()), password: nonNull(stringArg()) },
         resolve: async (_, args: any, ctx: context) => {
           return await Auth.login(args, ctx);
+        },
+      }),
+      t.nonNull.field("followUser", {
+        type: "User",
+        args: {
+          userId: nonNull(stringArg()),
+        },
+        resolve: async (_, args, ctx: context) => {
+          return await User.followUser(args.userId, ctx);
         },
       });
   },

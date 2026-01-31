@@ -3,7 +3,7 @@ import { context } from "../utils/types";
 class Post {
   async createPost(_: any, args: any, ctx: context) {
     const { caption, imageUrl } = args;
-    const userId = ctx.req?.user?.userId; // Assuming you have user authentication and userId available in the context
+    const userId = ctx.req?.user?.userId;
     if (!userId) return null;
 
     const post = await ctx.db.post.create({
@@ -17,6 +17,7 @@ class Post {
 
     return post;
   }
+
   async deletePost(id: string, ctx: context) {
     try {
       const postToDelete = await ctx.db.post.findUnique({ where: { id } });
@@ -30,13 +31,11 @@ class Post {
       return null;
     }
   }
+
   async updatePost(_: any, args: any, ctx: context) { }
 
   async getAllPosts(ctx: context) {
     const posts = await ctx.db.post.findMany({
-      where: {
-        authorId: ctx.req?.user?.userId,
-      },
       orderBy: {
         createdAt: "desc",
       },
@@ -44,6 +43,7 @@ class Post {
 
     return posts;
   }
+
   async getPost(id: string, ctx: context) {
     const post = await ctx.db.post.findUnique({
       where: {
@@ -54,17 +54,56 @@ class Post {
     return post;
   }
 
-  async likePost(postId: string, ctx: context) {
-    return await ctx.db.post.update({
-      where: { id: postId },
-      data: { likesCount: { increment: 1 } },
+  async toggleLikePost(postId: string, ctx: context) {
+    const userId = ctx.req?.user?.userId;
+    if (!userId) throw new Error("You must be logged in to like a post");
+
+    const existingLike = await ctx.db.like.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
     });
+
+    if (existingLike) {
+      await ctx.db.like.delete({
+        where: {
+          id: existingLike.id,
+        },
+      });
+      return await ctx.db.post.update({
+        where: { id: postId },
+        data: { likesCount: { decrement: 1 } },
+      });
+    } else {
+      await ctx.db.like.create({
+        data: {
+          userId,
+          postId,
+        },
+      });
+      return await ctx.db.post.update({
+        where: { id: postId },
+        data: { likesCount: { increment: 1 } },
+      });
+    }
   }
-  async unLikePost(postId: string, ctx: context) {
-    return await ctx.db.post.update({
-      where: { id: postId },
-      data: { likesCount: { decrement: 1 } },
+
+  async hasLiked(postId: string, ctx: context) {
+    const userId = ctx.req?.user?.userId;
+    if (!userId) return false;
+
+    const like = await ctx.db.like.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
     });
+    return !!like;
   }
 
   async postsPagination(args: any, ctx: context) {
@@ -77,10 +116,16 @@ class Post {
         cursor: {
           id: args.after,
         },
+        orderBy: {
+          createdAt: "desc"
+        }
       });
     } else {
       queryResult = await ctx.db.post.findMany({
         take: args.first,
+        orderBy: {
+          createdAt: "desc"
+        }
       });
     }
 
@@ -92,6 +137,9 @@ class Post {
         cursor: {
           id: cursor,
         },
+        orderBy: {
+          createdAt: "desc"
+        }
       });
       const result = {
         pageInfo: {

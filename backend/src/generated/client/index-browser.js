@@ -134,6 +134,13 @@ exports.Prisma.PostScalarFieldEnum = {
   authorId: 'authorId'
 };
 
+exports.Prisma.LikeScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  userId: 'userId',
+  postId: 'postId'
+};
+
 exports.Prisma.CommentScalarFieldEnum = {
   id: 'id',
   text: 'text',
@@ -163,6 +170,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   Story: 'Story',
   Post: 'Post',
+  Like: 'Like',
   Comment: 'Comment'
 };
 

@@ -22,12 +22,17 @@ export const post = objectType({
     t.field("updatedAt", {
       type: "DateTime",
     });
+    t.boolean("hasLiked", {
+      resolve: async (parent, _args, ctx: context) => {
+        return await Post.hasLiked(parent.id!, ctx);
+      },
+    });
     t.field("author", {
       type: "User",
       resolve: (parent, _args, ctx) => {
         return ctx.db.post
           .findUnique({
-            where: { id: parent.id },
+            where: { id: parent.id! },
           })
           .author();
       },
@@ -37,9 +42,12 @@ export const post = objectType({
       resolve: (parent, _args, ctx) => {
         return ctx.db.post
           .findUnique({
-            where: { id: parent.id },
+            where: { id: parent.id! },
           })
-          .comments();
+          .comments({
+            orderBy: { createdAt: "desc" },
+            include: { author: true }
+          });
       },
     });
   },
@@ -59,6 +67,15 @@ export const postMutation = extendType({
         return await Post.createPost(_, args, ctx);
       },
     }),
+      t.field("toggleLike", {
+        type: "Post",
+        args: {
+          id: nonNull(stringArg()),
+        },
+        resolve: async (_, args, ctx: context) => {
+          return await Post.toggleLikePost(args.id, ctx);
+        },
+      }),
       t.field("likePost", {
         type: "Post",
 
@@ -66,7 +83,7 @@ export const postMutation = extendType({
           id: nonNull(stringArg()),
         },
         resolve: async (_, args, ctx: context) => {
-          return await Post.likePost(args.id, ctx);
+          return await Post.toggleLikePost(args.id, ctx);
         },
       }),
       t.field("unlikePost", {
@@ -76,7 +93,7 @@ export const postMutation = extendType({
           id: nonNull(stringArg()),
         },
         resolve: async (_, args, ctx: context) => {
-          return await Post.unLikePost(args.id, ctx);
+          return await Post.toggleLikePost(args.id, ctx);
         },
       }),
       t.field("deletePost", {

@@ -9,10 +9,21 @@ export const GET_POST = gql`
           id
           caption
           imageUrl
-
+          likesCount
+          hasLiked
           author {
+            id
             name
             image
+          }
+          comments {
+            id
+            text
+            author {
+              id
+              name
+              image
+            }
           }
         }
       }
@@ -21,18 +32,29 @@ export const GET_POST = gql`
         hasNextPage
       }
     }
-  }`
+  }
+`;
 
 export const GET_STORIES = gql`
   query GetStories {
     getStories {
-    id
-    imageUrl
+      id
+      imageUrl
       author {
+        id
+        name
+        image
+      }
+    }
+  }
+`;
+
+export const GET_SUGGESTIONS = gql`
+  query GetSuggestions {
+    getSuggestions {
       id
       name
       image
     }
   }
-}
 `;

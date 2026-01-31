@@ -135,12 +135,15 @@ export interface NexusGenFieldTypes {
     userId: string | null; // String
   }
   Mutation: { // field return type
+    addComment: NexusGenRootTypes['Comment'] | null; // Comment
     createPost: NexusGenRootTypes['Post'] | null; // Post
     createStory: NexusGenRootTypes['Story'] | null; // Story
     deletePost: NexusGenRootTypes['Post'] | null; // Post
+    followUser: NexusGenRootTypes['User']; // User!
     likePost: NexusGenRootTypes['Post'] | null; // Post
     login: NexusGenRootTypes['Session']; // Session!
     register: NexusGenRootTypes['User']; // User!
+    toggleLike: NexusGenRootTypes['Post'] | null; // Post
     unlikePost: NexusGenRootTypes['Post'] | null; // Post
   }
   PageInfo: { // field return type
@@ -152,6 +155,7 @@ export interface NexusGenFieldTypes {
     caption: string | null; // String
     comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    hasLiked: boolean | null; // Boolean
     id: string | null; // String
     imageUrl: string | null; // String
     likesCount: number | null; // Int
@@ -161,6 +165,7 @@ export interface NexusGenFieldTypes {
     getAllPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getPost: NexusGenRootTypes['Post'] | null; // Post
     getStories: Array<NexusGenRootTypes['Story'] | null> | null; // [Story]
+    getSuggestions: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     getUserById: NexusGenRootTypes['User'] | null; // User
     getUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     me: NexusGenRootTypes['Me'] | null; // Me
@@ -221,12 +226,15 @@ export interface NexusGenFieldTypeNames {
     userId: 'String'
   }
   Mutation: { // field return type name
+    addComment: 'Comment'
     createPost: 'Post'
     createStory: 'Story'
     deletePost: 'Post'
+    followUser: 'User'
     likePost: 'Post'
     login: 'Session'
     register: 'User'
+    toggleLike: 'Post'
     unlikePost: 'Post'
   }
   PageInfo: { // field return type name
@@ -238,6 +246,7 @@ export interface NexusGenFieldTypeNames {
     caption: 'String'
     comments: 'Comment'
     createdAt: 'DateTime'
+    hasLiked: 'Boolean'
     id: 'String'
     imageUrl: 'String'
     likesCount: 'Int'
@@ -247,6 +256,7 @@ export interface NexusGenFieldTypeNames {
     getAllPosts: 'Post'
     getPost: 'Post'
     getStories: 'Story'
+    getSuggestions: 'User'
     getUserById: 'User'
     getUsers: 'User'
     me: 'Me'
@@ -288,6 +298,10 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    addComment: { // args
+      postId: string; // String!
+      text: string; // String!
+    }
     createPost: { // args
       caption?: string | null; // String
       imageUrl: string; // String!
@@ -297,6 +311,9 @@ export interface NexusGenArgTypes {
     }
     deletePost: { // args
       id: string; // String!
+    }
+    followUser: { // args
+      userId: string; // String!
     }
     likePost: { // args
       id: string; // String!
@@ -310,6 +327,9 @@ export interface NexusGenArgTypes {
       fullname?: string | null; // String
       name?: string | null; // String
       password: string; // String!
+    }
+    toggleLike: { // args
+      id: string; // String!
     }
     unlikePost: { // args
       id: string; // String!
