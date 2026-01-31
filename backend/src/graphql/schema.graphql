@@ -29,6 +29,7 @@ type Me {
 
 type Mutation {
   createPost(caption: String, imageUrl: String!): Post
+  createStory(imageUrl: String!): Story
   deletePost(id: String!): Post
   likePost(id: String!): Post
   login(email: String!, password: String!): Session!
@@ -55,6 +56,7 @@ type Post {
 type Query {
   getAllPosts: [Post]
   getPost(id: ID!): Post
+  getStories: [Story]
   getUserById(id: ID!): User
   getUsers: [User]
   me: Me
@@ -73,6 +75,14 @@ type Session {
   image: String
   name: String
   userId: String
+}
+
+type Story {
+  author: User
+  createdAt: DateTime
+  expiresAt: DateTime
+  id: String
+  imageUrl: String
 }
 
 type User {

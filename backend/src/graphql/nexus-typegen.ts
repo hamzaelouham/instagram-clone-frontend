@@ -86,6 +86,12 @@ export interface NexusGenObjects {
     name?: string | null; // String
     userId?: string | null; // String
   }
+  Story: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    expiresAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    imageUrl?: string | null; // String
+  }
   User: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
@@ -130,6 +136,7 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     createPost: NexusGenRootTypes['Post'] | null; // Post
+    createStory: NexusGenRootTypes['Story'] | null; // Story
     deletePost: NexusGenRootTypes['Post'] | null; // Post
     likePost: NexusGenRootTypes['Post'] | null; // Post
     login: NexusGenRootTypes['Session']; // Session!
@@ -153,6 +160,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     getAllPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getPost: NexusGenRootTypes['Post'] | null; // Post
+    getStories: Array<NexusGenRootTypes['Story'] | null> | null; // [Story]
     getUserById: NexusGenRootTypes['User'] | null; // User
     getUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     me: NexusGenRootTypes['Me'] | null; // Me
@@ -169,6 +177,13 @@ export interface NexusGenFieldTypes {
     image: string | null; // String
     name: string | null; // String
     userId: string | null; // String
+  }
+  Story: { // field return type
+    author: NexusGenRootTypes['User'] | null; // User
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    expiresAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string | null; // String
+    imageUrl: string | null; // String
   }
   User: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
@@ -207,6 +222,7 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     createPost: 'Post'
+    createStory: 'Story'
     deletePost: 'Post'
     likePost: 'Post'
     login: 'Session'
@@ -230,6 +246,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     getAllPosts: 'Post'
     getPost: 'Post'
+    getStories: 'Story'
     getUserById: 'User'
     getUsers: 'User'
     me: 'Me'
@@ -246,6 +263,13 @@ export interface NexusGenFieldTypeNames {
     image: 'String'
     name: 'String'
     userId: 'String'
+  }
+  Story: { // field return type name
+    author: 'User'
+    createdAt: 'DateTime'
+    expiresAt: 'DateTime'
+    id: 'String'
+    imageUrl: 'String'
   }
   User: { // field return type name
     createdAt: 'DateTime'
@@ -266,6 +290,9 @@ export interface NexusGenArgTypes {
   Mutation: {
     createPost: { // args
       caption?: string | null; // String
+      imageUrl: string; // String!
+    }
+    createStory: { // args
       imageUrl: string; // String!
     }
     deletePost: { // args

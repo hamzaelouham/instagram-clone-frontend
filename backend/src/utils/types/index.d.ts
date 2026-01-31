@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "../../generated/client";
 
 export interface Payload {
   userId: string;

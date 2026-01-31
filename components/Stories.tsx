@@ -1,53 +1,38 @@
 import React from "react";
-import { Story } from "./";
-
-type Iusers = {
-  username: string;
-  image: string;
-}[];
-
-const users: Iusers = [
-  {
-    username: "dali__ma",
-    image: "/images/avatars/dali.jpg",
-  },
-  {
-    username: "raphael_v",
-    image: "/images/avatars/raphael.jpg",
-  },
-  {
-    username: "steve_micro",
-    image: "/images/avatars/steve.jpg",
-  },
-  {
-    username: "orwell_reactjs",
-    image: "/images/avatars/orwell.jpg",
-  },
-  {
-    username: "dali__ma",
-    image: "/images/avatars/dali.jpg",
-  },
-  {
-    username: "raphael_v",
-    image: "/images/avatars/raphael.jpg",
-  },
-  {
-    username: "steve_micro",
-    image: "/images/avatars/steve.jpg",
-  },
-  {
-    username: "orwell_reactjs",
-    image: "/images/avatars/orwell.jpg",
-  },
-];
+import { Story } from "./Story";
+import { useQuery } from "@apollo/client";
+import { GET_STORIES } from "../utils/queries";
 
 export const Stories: React.FC = () => {
+  const { data, loading } = useQuery(GET_STORIES);
+
+  // If loading or no data, maybe show skeletons or nothing?
+  // For now, let's just render what we have.
+
+  // Also, we might want to show the current user's avatar as the first story to 'Add Story'.
+  // But for now, let's just list the fetched stories.
+
+  const stories = data?.getStories || [];
+
   return (
     <div className="bg-white dark:bg-dark dark:text-white box-border overflow-y-hidden relative py-[10px] mt-12 md:mt-8 block scroll-smooth scrollbar-thin">
       <div className="flex space-x-1">
-        {users?.map((u, i) => (
-          <Story key={i} me={i === 0} avatar={u.image} username={u.username} />
+        {/* Placeholder for 'Add Story' could go here if we had current user info */}
+
+        {loading && <div className="p-4 text-xs">Loading...</div>}
+
+        {stories.map((story: any) => (
+          <Story
+            key={story.id}
+            me={false /* logic for me? */}
+            avatar={story.author.image || "/images/avatars/default.jpg"}
+            username={story.author.name}
+          />
         ))}
+
+        {!loading && stories.length === 0 && (
+          <div className="p-4 text-xs text-gray-500">No stories yet</div>
+        )}
       </div>
     </div>
   );

@@ -1,33 +1,63 @@
-### run application
+# 📸 Instagram Clone (Reloaded 2026)
 
-yarn run dev
+Welcome back! This is your Instagram Clone project, upgraded and modernized to Next.js 16 and React 19.
 
-### build docker image
+## 🏗️ Project Architecture
 
-docker build -t <YOUR_DOCKERHUB_USERNAME>/insta-clone .
+This is a **monorepo** managed by `pnpm workspaces`.
 
-### push docker image
+*   **Frontend** (`/`): Next.js app using Apollo Client & Tailwind CSS.
+*   **Backend** (`/backend`): Node.js + Express + Apollo Server + Prisma (PostgreSQL).
 
-docker push <YOUR_DOCKERHUB_USERNAME>/insta-clone
+## 🚀 Quick Start
 
-### run docker image localy
+### 1. Prerequisites
+*   Node.js (v18+)
+*   Docker (for the database) -> `docker compose up -d`
+*   pnpm (`npm install -g pnpm`)
 
-docker run -p 3000:3000 -e PORT=3000 <YOUR_DOCKERHUB_USERNAME>/insta-clone
+### 2. Install Dependencies
+Run from the *root* folder:
+```bash
+pnpm install
+```
 
-### check your k8s client version
+### 3. Start the Backend
+The backend runs on port **4000**.
+```bash
+cd backend
+pnpm run dev
+```
+*   **GraphQL Playground**: [http://localhost:4000/graphql](http://localhost:4000/graphql)
 
-kubectl version --short
+### 4. Start the Frontend
+The frontend runs on port **3000**. Open a *new terminal*:
+```bash
+pnpm run dev
+```
+*   **App URL**: [http://localhost:3000](http://localhost:3000)
 
-### apply your deployment
+---
 
-cd /k8s && kubectl apply -f deployments/deployment.yaml
+## ✅ Feature Status (Verified)
 
-### create service
+| Feature | Status | Notes |
+| :--- | :--- | :--- |
+| **Authentication** | 🟢 Working | Login, Register, Logout verified. |
+| **Feed** | 🟢 Working | Posts load from backend. |
+| **Profile** | 🟢 Working | Authenticated user profile loads correctly. |
+| **Forgot Password** | 🔴 Missing | UI exists but no backend logic. |
+| **Stories** | 🟡 Mocked | UI exists but uses fake data. |
+| **Messages** | 🔴 Missing | Not implemented. |
 
-cd /k8s && kubectl apply -f services/servce.yaml
+## 📁 Key File Locations
 
-### using minikube
+*   **Database Schema**: `backend/prisma/schema.prisma`
+*   **Backend Resolvers**: `backend/src/graphql/typeDefs/`
+*   **Frontend Pages**: `pages/` (e.g., `auth/index.tsx`, `index.tsx`)
+*   **Frontend Components**: `components/`
 
-minikube start
-
-minikube addons enable ingress
+## 🛠️ Recent Upgrades
+*   **Next.js 16 / React 19**: Updated from v12.
+*   **Type Safety**: Fixed backend types (`app.ts`, `post.service.ts`).
+*   **Security**: Enabled `graphql-shield` and fixed schema typos (`iamge` -> `image`).

@@ -21,5 +21,18 @@ export const GET_POST = gql`
         hasNextPage
       }
     }
+  }`
+
+export const GET_STORIES = gql`
+  query GetStories {
+    getStories {
+    id
+    imageUrl
+      author {
+      id
+      name
+      image
+    }
   }
+}
 `;

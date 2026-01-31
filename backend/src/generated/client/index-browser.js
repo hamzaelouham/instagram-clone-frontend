@@ -116,6 +116,14 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.StoryScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt',
+  authorId: 'authorId'
+};
+
 exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
   caption: 'caption',
@@ -153,6 +161,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Story: 'Story',
   Post: 'Post',
   Comment: 'Comment'
 };

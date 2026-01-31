@@ -24,6 +24,16 @@ model User {
   following User[]    @relation("FollowRelation")
   Post      Post[]
   Comment   Comment[]
+  stories   Story[]
+}
+
+model Story {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
 }
 
 model Post {
