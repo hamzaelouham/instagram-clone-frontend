@@ -44,6 +44,20 @@ class Post {
     return posts;
   }
 
+  async getExplorePosts(ctx: context) {
+    const userId = ctx.req?.user?.userId;
+    return await ctx.db.post.findMany({
+      where: {
+        authorId: {
+          not: userId || undefined,
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
   async getPost(id: string, ctx: context) {
     const post = await ctx.db.post.findUnique({
       where: {

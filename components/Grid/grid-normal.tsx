@@ -1,27 +1,33 @@
 import { ReelsIcon } from "../";
 
-export const NormalGrid = () => {
+interface Props {
+  posts: any[];
+}
+
+export const NormalGrid = ({ posts }: Props) => {
+  if (!posts || posts.length < 5) return null;
+
   return (
-    <div className="grid grid-cols-3 gap-[2px] md:gap-6 ">
+    <div className="grid grid-cols-3 gap-[2px] md:gap-6 pt-[2px] md:pt-6">
       <div className="row-span-1">
         <div>
-          <img src="/images/avatars/dali.jpg" className="ex-img " alt="" />
+          <img src={posts[0].imageUrl} className="ex-img" alt="" />
         </div>
         <div>
-          <img src="/images/avatars/raphael.jpg" className="ex-img" alt="" />
+          <img src={posts[1].imageUrl} className="ex-img" alt="" />
         </div>
       </div>
       <div className="row-span-1 ">
         <div>
-          <img src="/images/avatars/steve.jpg" className="ex-img" alt="" />
+          <img src={posts[2].imageUrl} className="ex-img" alt="" />
         </div>
         <div>
-          <img src="/images/avatars/dali.jpg" className="ex-img" alt="" />
+          <img src={posts[3].imageUrl} className="ex-img" alt="" />
         </div>
       </div>
       <div className="row-span-1">
         <div className="relative h-full">
-          <img src="/images/avatars/orwell.jpg" className="ex-img" alt="" />
+          <img src={posts[4].imageUrl} className="ex-img" alt="" />
           <ReelsIcon />
         </div>
       </div>

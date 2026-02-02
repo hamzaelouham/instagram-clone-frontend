@@ -58,6 +58,7 @@ type Post {
 }
 
 type Query {
+  explorePosts: [Post]
   getAllPosts: [Post]
   getPost(id: ID!): Post
   getStories: [Story]

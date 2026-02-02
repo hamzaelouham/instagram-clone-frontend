@@ -162,6 +162,7 @@ export interface NexusGenFieldTypes {
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Query: { // field return type
+    explorePosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getAllPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getPost: NexusGenRootTypes['Post'] | null; // Post
     getStories: Array<NexusGenRootTypes['Story'] | null> | null; // [Story]
@@ -253,6 +254,7 @@ export interface NexusGenFieldTypeNames {
     updatedAt: 'DateTime'
   }
   Query: { // field return type name
+    explorePosts: 'Post'
     getAllPosts: 'Post'
     getPost: 'Post'
     getStories: 'Story'

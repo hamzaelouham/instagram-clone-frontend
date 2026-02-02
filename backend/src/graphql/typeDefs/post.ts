@@ -128,6 +128,12 @@ export const postQuery = extendType({
           return await Post.getAllPosts(ctx);
         },
       }),
+      t.list.field("explorePosts", {
+        type: "Post",
+        resolve: async (_, __, ctx: context) => {
+          return await Post.getExplorePosts(ctx);
+        },
+      }),
       t.field("posts", {
         type: "Response",
         args: {

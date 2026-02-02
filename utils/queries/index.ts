@@ -58,3 +58,20 @@ export const GET_SUGGESTIONS = gql`
     }
   }
 `;
+
+export const GET_EXPLORE_POSTS = gql`
+  query ExplorePosts {
+    explorePosts {
+      id
+      imageUrl
+      caption
+      likesCount
+      hasLiked
+      author {
+        id
+        name
+        image
+      }
+    }
+  }
+`;
