@@ -4,15 +4,19 @@ import {
   InMemoryCache,
   NormalizedCacheObject,
   from,
+  split,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { GraphQLWsLink } from "@apollo/client/link/subscriptions";
+import { createClient } from "graphql-ws";
 import { getSession } from "next-auth/react";
 import { useMemo } from "react";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 const httpLink = new HttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_URI || "http://localhost:4000/graphql",
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -28,9 +32,46 @@ const authLink = setContext(async (_, { headers }) => {
 });
 
 function createApollo() {
+  const wsLink =
+    typeof window !== "undefined"
+      ? new GraphQLWsLink(
+        createClient({
+          url: (process.env.NEXT_PUBLIC_GRAPHQL_URI || "http://localhost:4000/graphql").replace("http", "ws"),
+          connectionParams: async () => {
+            console.log("WS fetching session for connectionParams...");
+            const session: any = await getSession();
+            const token = session?.user?.accessToken;
+            console.log("WS token available:", !!token);
+            return {
+              authorization: token ? `Bearer ${token}` : "",
+            };
+          },
+          on: {
+            connected: () => console.log("WS Connected successfully"),
+            error: (err) => console.error("WS Connection error:", err),
+          }
+        })
+      )
+      : null;
+
+  const splitLink =
+    typeof window !== "undefined" && wsLink
+      ? split(
+        ({ query }) => {
+          const definition = getMainDefinition(query);
+          return (
+            definition.kind === "OperationDefinition" &&
+            definition.operation === "subscription"
+          );
+        },
+        wsLink,
+        from([authLink, httpLink])
+      )
+      : from([authLink, httpLink]);
+
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
-    link: from([authLink, httpLink]),
+    link: splitLink,
     cache: new InMemoryCache(),
   });
 }

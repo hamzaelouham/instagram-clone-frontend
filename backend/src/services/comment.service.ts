@@ -1,4 +1,5 @@
 import { context } from "../utils/types";
+import NotificationService from "./notification.service";
 
 class Comment {
     async createComment(args: { text: string; postId: string }, ctx: context) {
@@ -9,7 +10,7 @@ class Comment {
             throw new Error("You must be logged in to comment");
         }
 
-        return await ctx.db.comment.create({
+        const comment = await ctx.db.comment.create({
             data: {
                 text,
                 author: { connect: { id: userId } },
@@ -17,8 +18,22 @@ class Comment {
             },
             include: {
                 author: true,
+                post: true,
             },
         });
+
+        // Notify post author
+        await NotificationService.createNotification(
+            {
+                type: "COMMENT",
+                recipientId: comment.post.authorId,
+                senderId: userId,
+                postId: postId,
+            },
+            ctx
+        );
+
+        return comment;
     }
 
     async getCommentsByPostId(postId: string, ctx: context) {

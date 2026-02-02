@@ -53,7 +53,58 @@ class Auth {
     return user;
   }
 
-  async changePassword() {}
+  async changePassword() { }
+
+  async requestPasswordReset(email: string, ctx: context) {
+    const user = await ctx.db.user.findUnique({ where: { email } });
+    if (!user) {
+      // For security, don't reveal if user exists, but here we can throw or just return success
+      return { message: "If an account with that email exists, we have sent a reset link." };
+    }
+
+    const crypto = require("crypto");
+    const token = crypto.randomBytes(20).toString("hex");
+    const expires = new Date(Date.now() + 3600000); // 1 hour
+
+    await ctx.db.user.update({
+      where: { id: user.id },
+      data: {
+        resetPasswordToken: token,
+        resetPasswordExpires: expires,
+      },
+    });
+
+    // MOCK EMAIL SENDING
+    console.log(`[PASS_RESET] Token for ${email}: ${token}`);
+
+    return { message: "If an account with that email exists, we have sent a reset link." };
+  }
+
+  async resetPassword({ token, password }: any, ctx: context) {
+    const user = await ctx.db.user.findFirst({
+      where: {
+        resetPasswordToken: token,
+        resetPasswordExpires: {
+          gt: new Date(),
+        },
+      },
+    });
+
+    if (!user) {
+      throw new Error("Password reset token is invalid or has expired.");
+    }
+
+    await ctx.db.user.update({
+      where: { id: user.id },
+      data: {
+        password: await Hash(password, 10),
+        resetPasswordToken: null,
+        resetPasswordExpires: null,
+      },
+    });
+
+    return { message: "Success! Your password has been changed." };
+  }
 }
 
 export default new Auth();

@@ -75,3 +75,43 @@ export const GET_EXPLORE_POSTS = gql`
     }
   }
 `;
+
+export const GET_NOTIFICATIONS = gql`
+  query GetNotifications {
+    getNotifications {
+      id
+      type
+      read
+      createdAt
+      sender {
+        id
+        name
+        image
+      }
+      post {
+        id
+        imageUrl
+      }
+    }
+  }
+`;
+
+export const NOTIFICATION_CREATED_SUBSCRIPTION = gql`
+  subscription OnNotificationCreated {
+    notificationCreated {
+      id
+      type
+      read
+      createdAt
+      sender {
+        id
+        name
+        image
+      }
+      post {
+        id
+        imageUrl
+      }
+    }
+  }
+`;

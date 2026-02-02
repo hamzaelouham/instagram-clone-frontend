@@ -2,6 +2,10 @@
 ### Do not make changes to this file directly
 
 
+type AuthResponse {
+  message: String
+}
+
 type Comment {
   author: User
   createdAt: DateTime
@@ -35,9 +39,29 @@ type Mutation {
   followUser(userId: String!): User!
   likePost(id: String!): Post
   login(email: String!, password: String!): Session!
+  markNotificationAsRead(id: String!): Notification
   register(email: String!, fullname: String, name: String, password: String!): User!
+  requestPasswordReset(email: String!): AuthResponse
+  resetPassword(password: String!, token: String!): AuthResponse
+  testNotification(recipientId: String!): Notification
   toggleLike(id: String!): Post
   unlikePost(id: String!): Post
+}
+
+type Notification {
+  createdAt: DateTime
+  id: String
+  post: Post
+  read: Boolean
+  recipient: User
+  sender: User
+  type: NotificationType
+}
+
+enum NotificationType {
+  COMMENT
+  FOLLOW
+  LIKE
 }
 
 type PageInfo {
@@ -60,6 +84,7 @@ type Post {
 type Query {
   explorePosts: [Post]
   getAllPosts: [Post]
+  getNotifications: [Notification]
   getPost(id: ID!): Post
   getStories: [Story]
   getSuggestions: [User]
@@ -89,6 +114,10 @@ type Story {
   expiresAt: DateTime
   id: String
   imageUrl: String
+}
+
+type Subscription {
+  notificationCreated: Notification
 }
 
 type User {

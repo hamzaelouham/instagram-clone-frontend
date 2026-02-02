@@ -1,110 +1,110 @@
 import type { NextPage } from "next";
 import { LockClosedIcon } from "@heroicons/react/outline";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/router";
 import Head from "next/head";
+import { useMutation } from "@apollo/client";
+import { RESET_PASSWORD_MUTATION } from "../../utils/mutations";
+import toast from "react-hot-toast";
+import Link from "next/link";
 
 const ResetPassword: NextPage = () => {
-  const [input, setInput] = useState<string>("");
-  const [float, setFloat] = useState<boolean>(false);
-  const [active, setActive] = useState<boolean>(false);
-  //   @ts-ignore
-  const onInputChange = (e) => {
-    setInput(e.target.value);
-    setFloat(true);
-    setActive(true);
-  };
+  const router = useRouter();
+  const { token } = router.query;
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading_page, setLoadingPage] = useState(true);
+
+  const [resetPassword, { loading }] = useMutation(RESET_PASSWORD_MUTATION);
 
   useEffect(() => {
-    if (input === "") {
-      setFloat(false);
-      setActive(false);
+    if (router.isReady) {
+      if (!token) {
+        toast.error("Invalid reset link");
+        router.push("/auth/forgot-password");
+      }
+      setLoadingPage(false);
     }
-  }, [input]);
+  }, [router.isReady, token]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      return toast.error("Passwords do not match");
+    }
+    if (password.length < 6) {
+      return toast.error("Password must be at least 6 characters");
+    }
+
+    try {
+      await resetPassword({
+        variables: {
+          token: token as string,
+          password,
+        },
+      });
+      toast.success("Password updated successfully!");
+      router.push("/auth/");
+    } catch (err: any) {
+      toast.error(err.message);
+    }
+  };
+
+  if (loading_page) return null;
 
   return (
     <section className="bg-gray-50 h-screen ">
       <Head>
-        <title>Instagram</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Reset Password • Instagram</title>
       </Head>
 
       <main className=" flex flex-col">
-        {/* header */}
-        <div className="bg-white flex items-center sticky  h-[60px]  top-0 z-10 shadow-sm ">
-          <div className="flex  items-center flex-row  px-[20px] mt-[7px]  w-full max-w-[975px]">
-            <div className="cursor-pointer justify-start md:justify-center items-center flex flex-grow flex-shrink-0  w-full">
-              <img src="/images/logo.png" alt="logo" className="h-[29px]" />
-            </div>
-            <div className="flex-grow flex-shrink-0">
-              <div className="flex pl-6 flex-row whitespace-nowrap"></div>
+        <div className="bg-white flex items-center sticky h-[60px] top-0 z-10 shadow-sm ">
+          <div className="flex items-center flex-row px-[20px] mt-[7px] w-full max-w-[975px]">
+            <div className="cursor-pointer justify-start md:justify-center items-center flex flex-grow flex-shrink-0 w-full">
+              <Link href="/">
+                <img src="/images/logo.png" alt="logo" className="h-[29px]" />
+              </Link>
             </div>
           </div>
         </div>
-        {/* contents */}
+
         <div className="contents">
-          <div className="bg-white flex flex-col overflow-hidden rounded mx-auto mb-0 mt-[60px] border border-gray-200 max-w-sm">
-            <div className="mt-6 mb-4 flex justify-center items-center">
-              <LockClosedIcon className="h-24 w-24" />
-            </div>
-            <div className="mx-11 mb-4 text-center">
-              <h4 className="font-semibold text-base">
-                Problèmes de connexion ?
-              </h4>
-            </div>
-            <div className="mx-11 mb-4 text-center">
-              <p className="text-justify  text-xs text-gray-400 font-normal">
-                Entrez votre adresse e-mail, votre numéro de téléphone ou votre
-                nom d’utilisateur, et nous vous enverrons un lien pour récupérer
-                votre compte.
-              </p>
-            </div>
-            <div className="mx-11 mb-4">
-              <form>
-                <label
-                  htmlFor="forgetpassword"
-                  className="flex flex-grow items-center justify-between pr-2 relative border border-gray-200 rounded-md "
-                >
-                  <input
-                    type="text"
-                    onChange={(e) => onInputChange(e)}
-                    value={input}
-                    name="forgetpassword"
-                    className="w-full text-sm py-[9px] px-1 border-none focus:border focus:ring-0"
-                  />
-                  <span
-                    className={`${
-                      float && "float-label"
-                    }  absolute left-0 right-0 pointer-events-none text-[14px] font-normal mx-2 my-1 whitespace-nowrap overflow-hidden text-gray-400`}
-                  >
-                    E-mail, téléphone ou nom d’utilisateur
-                  </span>
-                </label>
-              </form>
-            </div>
-            <div className="mx-11 mb-4 flex flex-col">
-              <button
-                className={`insta-btn w-full ${active ? "acive-btn" : ""}`}
-                type="submit"
-              >
-                Reset Password
-              </button>
-              <p className="text-xs text-center font-light mt-3 text-blue-900">
-                Vous ne parvenez pas à réinitialiser votre mot de passe ?
-              </p>
+          <div className="bg-white flex flex-col overflow-hidden rounded mx-auto mb-0 mt-[60px] border border-gray-200 max-w-sm p-10">
+            <div className="mb-4 flex justify-center items-center">
+              <LockClosedIcon className="h-16 w-16" />
             </div>
 
-            <div className="flex flex-row justify-center items-center mx-11 my-4 ">
-              <div className="flex-grow flex-shrink h-[1px] relative bg-gray-300"></div>
-              <div className="text-gray-400 font-semibold mx-4">OR</div>
-              <div className="flex-grow flex-shrink h-[1px] relative bg-gray-300"></div>
-            </div>
-            <div className="text-center font-medium text-sm text-color-black mx-11 mb-4 ">
-              <Link href="/auth/register">Créer un compte</Link>
-            </div>
-            <div className="bg-gray-50 mt-16 h-11 border border-gray-300  font-medium text-sm text-center  text-color-black flex items-center justify-center">
-              <Link href="/auth/"> Back to login</Link>
-            </div>
+            <h4 className="font-semibold text-center text-base mb-6">
+              Create a Strong Password
+            </h4>
+
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+              <input
+                type="password"
+                required
+                placeholder="New Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full text-sm py-[12px] px-2 border border-gray-200 rounded-md bg-gray-50 focus:ring-1 focus:ring-blue-500 outline-none"
+              />
+              <input
+                type="password"
+                required
+                placeholder="Confirm New Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className="w-full text-sm py-[12px] px-2 border border-gray-200 rounded-md bg-gray-50 focus:ring-1 focus:ring-blue-500 outline-none"
+              />
+
+              <button
+                className={`insta-btn w-full bg-blue-500 ${loading ? "opacity-50" : ""}`}
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? "Updating..." : "Reset Password"}
+              </button>
+            </form>
           </div>
         </div>
       </main>

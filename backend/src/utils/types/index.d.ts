@@ -14,4 +14,6 @@ export interface context {
   req: AuthRequest;
   res: Response;
   db: PrismaClient;
+  pubsub: any; // Or use PubSub from graphql-subscriptions
+  user?: Payload | null;
 }

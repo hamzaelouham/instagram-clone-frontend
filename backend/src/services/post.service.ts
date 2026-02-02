@@ -1,4 +1,5 @@
 import { context } from "../utils/types";
+import NotificationService from "./notification.service";
 
 class Post {
   async createPost(_: any, args: any, ctx: context) {
@@ -70,6 +71,7 @@ class Post {
 
   async toggleLikePost(postId: string, ctx: context) {
     const userId = ctx.req?.user?.userId;
+    console.log(`toggleLikePost called. User: ${userId}, Post: ${postId}`);
     if (!userId) throw new Error("You must be logged in to like a post");
 
     const existingLike = await ctx.db.like.findUnique({
@@ -98,10 +100,24 @@ class Post {
           postId,
         },
       });
-      return await ctx.db.post.update({
+
+      const updatedPost = await ctx.db.post.update({
         where: { id: postId },
         data: { likesCount: { increment: 1 } },
       });
+
+      // Notify post author
+      await NotificationService.createNotification(
+        {
+          type: "LIKE",
+          recipientId: updatedPost.authorId,
+          senderId: userId,
+          postId: postId,
+        },
+        ctx
+      );
+
+      return updatedPost;
     }
   }
 

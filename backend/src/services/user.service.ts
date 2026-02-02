@@ -4,6 +4,8 @@ import { context } from "../utils/types";
 // : Promise<NexusGenObjects["User"][] | null>
 // : Promise<NexusGenObjects["User"] | null>
 
+import NotificationService from "./notification.service";
+
 class User {
   async getUsers(ctx: context) {
     return await ctx.db.user.findMany();
@@ -39,11 +41,13 @@ class User {
   }
 
   async followUser(userIdToFollow: string, ctx: context) {
+    const userId = ctx.req?.user?.userId;
+    console.log(`followUser called. From: ${userId}, To: ${userIdToFollow}`);
     if (!ctx.req.user) {
       throw new Error("Log in to follow users");
     }
 
-    return await ctx.db.user.update({
+    const updatedUser = await ctx.db.user.update({
       where: { id: ctx.req.user.userId },
       data: {
         following: {
@@ -51,6 +55,18 @@ class User {
         },
       },
     });
+
+    // Notify the user being followed
+    await NotificationService.createNotification(
+      {
+        type: "FOLLOW",
+        recipientId: userIdToFollow,
+        senderId: ctx.req.user.userId,
+      },
+      ctx
+    );
+
+    return updatedUser;
   }
 }
 

@@ -113,7 +113,9 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   image: 'image',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  resetPasswordToken: 'resetPasswordToken',
+  resetPasswordExpires: 'resetPasswordExpires'
 };
 
 exports.Prisma.StoryScalarFieldEnum = {
@@ -150,6 +152,16 @@ exports.Prisma.CommentScalarFieldEnum = {
   postId: 'postId'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  read: 'read',
+  createdAt: 'createdAt',
+  recipientId: 'recipientId',
+  senderId: 'senderId',
+  postId: 'postId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -164,14 +176,19 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.NotificationType = {
+  FOLLOW: 'FOLLOW',
+  LIKE: 'LIKE',
+  COMMENT: 'COMMENT'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
   Story: 'Story',
   Post: 'Post',
   Like: 'Like',
-  Comment: 'Comment'
+  Comment: 'Comment',
+  Notification: 'Notification'
 };
 
 /**

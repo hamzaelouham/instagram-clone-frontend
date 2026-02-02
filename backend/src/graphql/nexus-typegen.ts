@@ -31,6 +31,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  NotificationType: "COMMENT" | "FOLLOW" | "LIKE"
 }
 
 export interface NexusGenScalars {
@@ -43,6 +44,9 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  AuthResponse: { // root type
+    message?: string | null; // String
+  }
   Comment: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
@@ -61,6 +65,15 @@ export interface NexusGenObjects {
     userId?: string | null; // String
   }
   Mutation: {};
+  Notification: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    post?: NexusGenRootTypes['Post'] | null; // Post
+    read?: boolean | null; // Boolean
+    recipient?: NexusGenRootTypes['User'] | null; // User
+    sender?: NexusGenRootTypes['User'] | null; // User
+    type?: NexusGenEnums['NotificationType'] | null; // NotificationType
+  }
   PageInfo: { // root type
     endCursor?: string | null; // String
     hasNextPage?: boolean | null; // Boolean
@@ -92,6 +105,7 @@ export interface NexusGenObjects {
     id?: string | null; // String
     imageUrl?: string | null; // String
   }
+  Subscription: {};
   User: { // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
@@ -112,9 +126,12 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  AuthResponse: { // field return type
+    message: string | null; // String
+  }
   Comment: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
@@ -142,9 +159,22 @@ export interface NexusGenFieldTypes {
     followUser: NexusGenRootTypes['User']; // User!
     likePost: NexusGenRootTypes['Post'] | null; // Post
     login: NexusGenRootTypes['Session']; // Session!
+    markNotificationAsRead: NexusGenRootTypes['Notification'] | null; // Notification
     register: NexusGenRootTypes['User']; // User!
+    requestPasswordReset: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
+    resetPassword: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
+    testNotification: NexusGenRootTypes['Notification'] | null; // Notification
     toggleLike: NexusGenRootTypes['Post'] | null; // Post
     unlikePost: NexusGenRootTypes['Post'] | null; // Post
+  }
+  Notification: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string | null; // String
+    post: NexusGenRootTypes['Post'] | null; // Post
+    read: boolean | null; // Boolean
+    recipient: NexusGenRootTypes['User'] | null; // User
+    sender: NexusGenRootTypes['User'] | null; // User
+    type: NexusGenEnums['NotificationType'] | null; // NotificationType
   }
   PageInfo: { // field return type
     endCursor: string | null; // String
@@ -164,6 +194,7 @@ export interface NexusGenFieldTypes {
   Query: { // field return type
     explorePosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getAllPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
+    getNotifications: Array<NexusGenRootTypes['Notification'] | null> | null; // [Notification]
     getPost: NexusGenRootTypes['Post'] | null; // Post
     getStories: Array<NexusGenRootTypes['Story'] | null> | null; // [Story]
     getSuggestions: Array<NexusGenRootTypes['User'] | null> | null; // [User]
@@ -191,6 +222,9 @@ export interface NexusGenFieldTypes {
     id: string | null; // String
     imageUrl: string | null; // String
   }
+  Subscription: { // field return type
+    notificationCreated: NexusGenRootTypes['Notification'] | null; // Notification
+  }
   User: { // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
@@ -207,6 +241,9 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  AuthResponse: { // field return type name
+    message: 'String'
+  }
   Comment: { // field return type name
     author: 'User'
     createdAt: 'DateTime'
@@ -234,9 +271,22 @@ export interface NexusGenFieldTypeNames {
     followUser: 'User'
     likePost: 'Post'
     login: 'Session'
+    markNotificationAsRead: 'Notification'
     register: 'User'
+    requestPasswordReset: 'AuthResponse'
+    resetPassword: 'AuthResponse'
+    testNotification: 'Notification'
     toggleLike: 'Post'
     unlikePost: 'Post'
+  }
+  Notification: { // field return type name
+    createdAt: 'DateTime'
+    id: 'String'
+    post: 'Post'
+    read: 'Boolean'
+    recipient: 'User'
+    sender: 'User'
+    type: 'NotificationType'
   }
   PageInfo: { // field return type name
     endCursor: 'String'
@@ -256,6 +306,7 @@ export interface NexusGenFieldTypeNames {
   Query: { // field return type name
     explorePosts: 'Post'
     getAllPosts: 'Post'
+    getNotifications: 'Notification'
     getPost: 'Post'
     getStories: 'Story'
     getSuggestions: 'User'
@@ -282,6 +333,9 @@ export interface NexusGenFieldTypeNames {
     expiresAt: 'DateTime'
     id: 'String'
     imageUrl: 'String'
+  }
+  Subscription: { // field return type name
+    notificationCreated: 'Notification'
   }
   User: { // field return type name
     createdAt: 'DateTime'
@@ -324,11 +378,24 @@ export interface NexusGenArgTypes {
       email: string; // String!
       password: string; // String!
     }
+    markNotificationAsRead: { // args
+      id: string; // String!
+    }
     register: { // args
       email: string; // String!
       fullname?: string | null; // String
       name?: string | null; // String
       password: string; // String!
+    }
+    requestPasswordReset: { // args
+      email: string; // String!
+    }
+    resetPassword: { // args
+      password: string; // String!
+      token: string; // String!
+    }
+    testNotification: { // args
+      recipientId: string; // String!
     }
     toggleLike: { // args
       id: string; // String!
@@ -361,7 +428,7 @@ export type NexusGenObjectNames = keyof NexusGenObjects;
 
 export type NexusGenInputNames = never;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 

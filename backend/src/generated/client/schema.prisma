@@ -26,6 +26,10 @@ model User {
   Comment   Comment[]
   stories   Story[]
   likes     Like[]
+  resetPasswordToken   String?   @unique
+  resetPasswordExpires DateTime?
+  notifications        Notification[] @relation("RecipientNotifications")
+  sentNotifications    Notification[] @relation("SenderNotifications")
 }
 
 model Story {
@@ -48,6 +52,7 @@ model Post {
   authorId   String
   comments   Comment[]
   likes      Like[]
+  notifications Notification[]
 }
 
 model Like {
@@ -70,4 +75,26 @@ model Comment {
   authorId  String
   post      Post     @relation(fields: [postId], references: [id])
   postId    String
+}
+
+model Notification {
+  id          String           @id @default(cuid())
+  type        NotificationType
+  read        Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  
+  recipient   User             @relation("RecipientNotifications", fields: [recipientId], references: [id])
+  recipientId String
+  
+  sender      User             @relation("SenderNotifications", fields: [senderId], references: [id])
+  senderId    String
+  
+  post        Post?            @relation(fields: [postId], references: [id])
+  postId      String?
+}
+
+enum NotificationType {
+  FOLLOW
+  LIKE
+  COMMENT
 }

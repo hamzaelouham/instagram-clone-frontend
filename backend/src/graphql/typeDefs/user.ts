@@ -103,6 +103,13 @@ export const userQuery = extendType({
   },
 });
 
+export const authResponse = objectType({
+  name: "AuthResponse",
+  definition(t) {
+    t.string("message");
+  },
+});
+
 export const userMutation = extendType({
   type: "Mutation",
   definition(t) {
@@ -134,6 +141,26 @@ export const userMutation = extendType({
         resolve: async (_, args, ctx: context) => {
           return await User.followUser(args.userId, ctx);
         },
+      }),
+      t.field("requestPasswordReset", {
+        type: "AuthResponse",
+        args: {
+          email: nonNull(stringArg()),
+        },
+        resolve: async (_, { email }, ctx: context) => {
+          return await Auth.requestPasswordReset(email, ctx);
+        },
+      }),
+      t.field("resetPassword", {
+        type: "AuthResponse",
+        args: {
+          token: nonNull(stringArg()),
+          password: nonNull(stringArg()),
+        },
+        resolve: async (_, args, ctx: context) => {
+          return await Auth.resetPassword(args, ctx);
+        },
       });
   },
 });
+
