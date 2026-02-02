@@ -4,7 +4,13 @@
 
 @layer components {
   .icons {
-    @apply hidden h-6 md:inline-flex cursor-pointer hover:scale-125 transition-all duration-150 ease-out;
+    @apply h-6 w-6  cursor-pointer md:hover:scale-125 transition-all duration-150 ease-out;
+  }
+  .upload-btn {
+    @apply w-1/2 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2;
+  }
+  .ex-img {
+    @apply object-cover h-full w-full;
   }
   .rotate {
     @apply transform rotate-45;
@@ -13,7 +19,7 @@
     @apply absolute -top-2 -right-1 text-white text-xs w-5 h-5 bg-red-500 rounded-full flex items-center justify-center;
   }
   .input {
-    @apply bg-gray-50 block w-full pl-10 sm:text-sm border-solid border border-gray-300 rounded-md focus:ring-gray-400 focus:border focus:border-gray-400;
+    @apply bg-gray-100 block w-full pl-10 sm:text-sm border-solid border border-gray-300 rounded-md focus:ring-gray-400 focus:border focus:border-gray-400;
   }
   .btn {
     @apply h-7 hover:scale-110 cursor-pointer transition-all duration-150 ease-out;
@@ -24,10 +30,20 @@
   .login-input {
     @apply text-sm text-gray-400 mx-8  py-4 px-4 h-2 border border-gray-300 rounded-sm mb-2 bg-gray-50  focus:ring-gray-400 outline-none focus:border-none focus:border-gray-400;
   }
+  .strok {
+    @apply top-0 left-0  z-20 fixed w-full;
+  }
+  .bar {
+    @apply h-1 bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500;
+  }
   .p-input {
     padding: 9px 0 7px 8px;
   }
+
   .acive-btn {
     @apply bg-blue-500;
+  }
+  .line-h-sm {
+    line-height: 18px;
   }
 }

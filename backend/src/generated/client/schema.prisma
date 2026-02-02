@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  fullname  String?
+  name      String?
+  email     String    @unique
+  password  String
+  image     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  followers User[]    @relation("FollowRelation")
+  following User[]    @relation("FollowRelation")
+  Post      Post[]
+  Comment   Comment[]
+  stories   Story[]
+  likes     Like[]
+  resetPasswordToken   String?   @unique
+  resetPasswordExpires DateTime?
+  notifications        Notification[] @relation("RecipientNotifications")
+  sentNotifications    Notification[] @relation("SenderNotifications")
+}
+
+model Story {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+model Post {
+  id         String    @id @default(cuid())
+  caption    String?
+  imageUrl   String
+  likesCount Int       @default(0)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  author     User      @relation(fields: [authorId], references: [id])
+  authorId   String
+  comments   Comment[]
+  likes      Like[]
+  notifications Notification[]
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+
+  @@unique([userId, postId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
+}
+
+model Notification {
+  id          String           @id @default(cuid())
+  type        NotificationType
+  read        Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  
+  recipient   User             @relation("RecipientNotifications", fields: [recipientId], references: [id])
+  recipientId String
+  
+  sender      User             @relation("SenderNotifications", fields: [senderId], references: [id])
+  senderId    String
+  
+  post        Post?            @relation(fields: [postId], references: [id])
+  postId      String?
+}
+
+enum NotificationType {
+  FOLLOW
+  LIKE
+  COMMENT
+}

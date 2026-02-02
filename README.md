@@ -1,27 +1,63 @@
-# Next.js + Tailwind CSS Example
+# 📸 Instagram Clone (Reloaded 2026)
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+Welcome back! This is your Instagram Clone project, upgraded and modernized to Next.js 16 and React 19.
 
-## Deploy your own
+## 🏗️ Project Architecture
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+This is a **monorepo** managed by `pnpm workspaces`.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+*   **Frontend** (`/`): Next.js app using Apollo Client & Tailwind CSS.
+*   **Backend** (`/backend`): Node.js + Express + Apollo Server + Prisma (PostgreSQL).
 
-## How to use
+## 🚀 Quick Start
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
+### 1. Prerequisites
+*   Node.js (v18+)
+*   Docker (for the database) -> `docker compose up -d`
+*   pnpm (`npm install -g pnpm`)
 
+### 2. Install Dependencies
+Run from the *root* folder:
 ```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
+pnpm install
 ```
 
+### 3. Start the Backend
+The backend runs on port **4000**.
 ```bash
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+cd backend
+pnpm run dev
 ```
+*   **GraphQL Playground**: [http://localhost:4000/graphql](http://localhost:4000/graphql)
 
+### 4. Start the Frontend
+The frontend runs on port **3000**. Open a *new terminal*:
 ```bash
-pnpm create next-app --example with-tailwindcss with-tailwindcss-app
+pnpm run dev
 ```
+*   **App URL**: [http://localhost:3000](http://localhost:3000)
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+---
+
+## ✅ Feature Status (Verified)
+
+| Feature | Status | Notes |
+| :--- | :--- | :--- |
+| **Authentication** | 🟢 Working | Login, Register, Logout verified. |
+| **Feed** | 🟢 Working | Posts load from backend. |
+| **Profile** | 🟢 Working | Authenticated user profile loads correctly. |
+| **Forgot Password** | 🔴 Missing | UI exists but no backend logic. |
+| **Stories** | 🟡 Mocked | UI exists but uses fake data. |
+| **Messages** | 🔴 Missing | Not implemented. |
+
+## 📁 Key File Locations
+
+*   **Database Schema**: `backend/prisma/schema.prisma`
+*   **Backend Resolvers**: `backend/src/graphql/typeDefs/`
+*   **Frontend Pages**: `pages/` (e.g., `auth/index.tsx`, `index.tsx`)
+*   **Frontend Components**: `components/`
+
+## 🛠️ Recent Upgrades
+*   **Next.js 16 / React 19**: Updated from v12.
+*   **Type Safety**: Fixed backend types (`app.ts`, `post.service.ts`).
+*   **Security**: Enabled `graphql-shield` and fixed schema typos (`iamge` -> `image`).
