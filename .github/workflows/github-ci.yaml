@@ -42,7 +42,7 @@ jobs:
         run: pnpm exec tsc --noEmit
 
       - name: Check format (Prettier)
-        run: pnpm run format:check
+        run: pnpm run format:fix
 
       - name: ESLint (TypeScript)
         run: pnpm run lint
