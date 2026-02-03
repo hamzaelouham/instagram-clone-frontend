@@ -1,9 +1,9 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { Header, Navigation, NormalGrid, ReverseGrid } from "../../components";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { Header, Navigation, NormalGrid, ReverseGrid } from '../../components';
 
-import { useQuery } from "@apollo/client";
-import { GET_EXPLORE_POSTS } from "../../utils/queries";
+import { useQuery } from '@apollo/client';
+import { GET_EXPLORE_POSTS } from '../../utils/queries';
 
 const SearchPage: NextPage = () => {
   const { data, loading, error } = useQuery(GET_EXPLORE_POSTS);
@@ -29,7 +29,7 @@ const SearchPage: NextPage = () => {
       <main className="container mt-11 md:mt-14 h-screen lg:max-w-[935px]">
         <div className="mx-[2px] md:px-5 md:py-6  h-full pb-20">
           {loading && <div className="p-10 text-center">Loading...</div>}
-          
+
           {chunks.map((chunk, index) => {
             if (index % 2 === 0) {
               return <NormalGrid key={index} posts={chunk} />;
@@ -40,9 +40,14 @@ const SearchPage: NextPage = () => {
 
           {!loading && explorePosts.length < 5 && (
             <div className="grid grid-cols-3 gap-[2px] md:gap-6 pt-[2px] md:pt-6">
-                {explorePosts.map((post: any) => (
-                    <img key={post.id} src={post.imageUrl} className="ex-img aspect-square" alt="" />
-                ))}
+              {explorePosts.map((post: any) => (
+                <img
+                  key={post.id}
+                  src={post.imageUrl}
+                  className="ex-img aspect-square"
+                  alt=""
+                />
+              ))}
             </div>
           )}
 

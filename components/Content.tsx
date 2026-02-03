@@ -1,5 +1,5 @@
-import React from "react";
-import { Stories, Posts, MiniProfile, Suggestion } from "./";
+import React from 'react';
+import { Stories, Posts, MiniProfile, Suggestion } from './';
 
 export const HomeContent: React.FC = () => {
   return (

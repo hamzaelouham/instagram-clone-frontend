@@ -1,4 +1,4 @@
-import { useNProgress } from "@tanem/react-nprogress";
+import { useNProgress } from '@tanem/react-nprogress';
 
 interface BarProps {
   duration: number | string;

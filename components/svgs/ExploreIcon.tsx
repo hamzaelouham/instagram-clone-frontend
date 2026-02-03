@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface IconProps {
   className: string;
@@ -58,4 +58,3 @@ export const ExploreIcon: React.FC<IconProps> = ({ className }) => {
     </svg>
   );
 };
-

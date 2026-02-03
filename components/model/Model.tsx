@@ -1,6 +1,6 @@
-import React, { Fragment, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { DocumentAddIcon } from "@heroicons/react/outline";
+import React, { Fragment, useRef, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+import { DocumentAddIcon } from '@heroicons/react/outline';
 
 interface ModelProps {
   isOpen: boolean;
@@ -129,13 +129,13 @@ export const Model: React.FC<ModelProps> = ({ isOpen, closeModal }) => {
                         draggable={true}
                         className={`flex h-28 items-center justify-center mb-3 border-dashed border-2 ${
                           activeDropZone
-                            ? "border-primary bg-blue-100"
-                            : " border-gray-600"
+                            ? 'border-primary bg-blue-100'
+                            : ' border-gray-600'
                         }`}
                       >
                         <DocumentAddIcon
                           className={`h-20 w-20 text-xs cursor-pointer transition ease-out ${
-                            activeDropZone ? "text-primary" : " text-gray-700"
+                            activeDropZone ? 'text-primary' : ' text-gray-700'
                           }`}
                           onClick={triggerInput}
                         />
@@ -158,12 +158,12 @@ export const Model: React.FC<ModelProps> = ({ isOpen, closeModal }) => {
                   <button
                     type="button"
                     className={`upload-btn ${
-                      loading ? "cursor-not-allowed animate-pulse" : ""
+                      loading ? 'cursor-not-allowed animate-pulse' : ''
                     }`}
                     onClick={upLoadPublication}
                     disabled={loading}
                   >
-                    {loading ? "uploading..." : "publish"}
+                    {loading ? 'uploading...' : 'publish'}
                   </button>
                 </div>
               </Dialog.Panel>

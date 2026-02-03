@@ -1,14 +1,14 @@
-import type { NextPage } from "next";
-import { LockClosedIcon } from "@heroicons/react/outline";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Head from "next/head";
-import { useMutation } from "@apollo/client";
-import { REQUEST_PASSWORD_RESET } from "../../utils/mutations";
-import toast from "react-hot-toast";
+import type { NextPage } from 'next';
+import { LockClosedIcon } from '@heroicons/react/outline';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import Head from 'next/head';
+import { useMutation } from '@apollo/client';
+import { REQUEST_PASSWORD_RESET } from '../../utils/mutations';
+import toast from 'react-hot-toast';
 
 const ForgotPassword: NextPage = () => {
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState<string>('');
   const [float, setFloat] = useState<boolean>(false);
   const [active, setActive] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
@@ -20,7 +20,7 @@ const ForgotPassword: NextPage = () => {
   };
 
   useEffect(() => {
-    if (email === "") {
+    if (email === '') {
       setFloat(false);
       setActive(false);
     } else {
@@ -36,7 +36,7 @@ const ForgotPassword: NextPage = () => {
     try {
       await requestReset({ variables: { email } });
       setSubmitted(true);
-      toast.success("Reset link sent!");
+      toast.success('Reset link sent!');
     } catch (err: any) {
       toast.error(err.message);
     }
@@ -73,7 +73,8 @@ const ForgotPassword: NextPage = () => {
                   Check your email
                 </h4>
                 <p className="text-sm text-gray-500">
-                  We've sent a link to <b>{email}</b>. If an account exists, you'll receive a password reset link shortly.
+                  We've sent a link to <b>{email}</b>. If an account exists,
+                  you'll receive a password reset link shortly.
                 </p>
                 <p className="mt-6 text-xs text-gray-400">
                   (Development: Check the backend logs for the reset link)
@@ -88,7 +89,8 @@ const ForgotPassword: NextPage = () => {
                 </div>
                 <div className="mx-11 mb-4 text-center">
                   <p className="text-center text-xs text-gray-400 font-normal">
-                    Enter your email and we'll send you a link to get back into your account.
+                    Enter your email and we'll send you a link to get back into
+                    your account.
                   </p>
                 </div>
                 <div className="mx-11 mb-4">
@@ -106,25 +108,30 @@ const ForgotPassword: NextPage = () => {
                         className="w-full text-sm py-[12px] px-2 border-none focus:ring-0 bg-transparent z-10"
                       />
                       <span
-                        className={`${float ? "text-[10px] -top-0 translate-y-1" : "text-[14px] top-1/2 -translate-y-1/2"
-                          } absolute transition-all left-2 pointer-events-none font-normal whitespace-nowrap overflow-hidden text-gray-400`}
+                        className={`${
+                          float
+                            ? 'text-[10px] -top-0 translate-y-1'
+                            : 'text-[14px] top-1/2 -translate-y-1/2'
+                        } absolute transition-all left-2 pointer-events-none font-normal whitespace-nowrap overflow-hidden text-gray-400`}
                       >
                         Email
                       </span>
                     </label>
                     <button
-                      className={`insta-btn w-full mt-4 ${active ? "acive-btn" : "opacity-50 cursor-not-allowed"}`}
+                      className={`insta-btn w-full mt-4 ${active ? 'acive-btn' : 'opacity-50 cursor-not-allowed'}`}
                       type="submit"
                       disabled={!active || loading}
                     >
-                      {loading ? "Sending..." : "Send Login Link"}
+                      {loading ? 'Sending...' : 'Send Login Link'}
                     </button>
                   </form>
                 </div>
 
                 <div className="flex flex-row justify-center items-center mx-11 my-4 ">
                   <div className="flex-grow flex-shrink h-[1px] relative bg-gray-300"></div>
-                  <div className="text-gray-400 font-semibold mx-4 text-xs">OR</div>
+                  <div className="text-gray-400 font-semibold mx-4 text-xs">
+                    OR
+                  </div>
                   <div className="flex-grow flex-shrink h-[1px] relative bg-gray-300"></div>
                 </div>
                 <div className="text-center font-bold text-sm text-black mx-11 mb-4 ">

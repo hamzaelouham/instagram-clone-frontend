@@ -1,32 +1,39 @@
-import React, { useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_NOTIFICATIONS, NOTIFICATION_CREATED_SUBSCRIPTION } from "../utils/queries";
-import { useSession } from "next-auth/react";
+import React, { useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import {
+  GET_NOTIFICATIONS,
+  NOTIFICATION_CREATED_SUBSCRIPTION,
+} from '../utils/queries';
+import { useSession } from 'next-auth/react';
 
 const getActionMessage = (type: string) => {
   switch (type) {
-    case "FOLLOW":
-      return "started following you";
-    case "LIKE":
-      return "liked your post";
-    case "COMMENT":
-      return "commented on your post";
+    case 'FOLLOW':
+      return 'started following you';
+    case 'LIKE':
+      return 'liked your post';
+    case 'COMMENT':
+      return 'commented on your post';
     default:
-      return "interacted with you";
+      return 'interacted with you';
   }
 };
 
 const ActivityCard = ({ notification }: { notification: any }) => (
-  <div className={`flex items-center flex-row px-4 py-3 last:mb-[30px] ${!notification.read ? "bg-blue-50" : ""}`}>
+  <div
+    className={`flex items-center flex-row px-4 py-3 last:mb-[30px] ${!notification.read ? 'bg-blue-50' : ''}`}
+  >
     <div className="h-11 w-11 relative">
       <img
-        src={notification.sender.image || "/images/avatars/orwell.jpg"}
+        src={notification.sender.image || '/images/avatars/orwell.jpg'}
         className="absolute object-cover rounded-full h-full w-full"
         alt={notification.sender.name}
       />
     </div>
     <div className="flex flex-col mx-3 break-words flex-auto">
-      <h1 className="truncate font-bold text-sm line-sm">{notification.sender.name}</h1>
+      <h1 className="truncate font-bold text-sm line-sm">
+        {notification.sender.name}
+      </h1>
       <h3 className="text-sm font-normal line-sm">
         {getActionMessage(notification.type)}
         <span className="text-gray-400 text-xs ml-2">
@@ -36,7 +43,11 @@ const ActivityCard = ({ notification }: { notification: any }) => (
     </div>
     {notification.post && (
       <div className="h-10 w-10">
-        <img src={notification.post.imageUrl} className="h-full w-full object-cover" alt="" />
+        <img
+          src={notification.post.imageUrl}
+          className="h-full w-full object-cover"
+          alt=""
+        />
       </div>
     )}
     {!notification.post && (
@@ -63,7 +74,8 @@ export const Activity = () => {
         const newNotification = subscriptionData.data.notificationCreated;
 
         // Check if already in list
-        if (prev.getNotifications.find((n: any) => n.id === newNotification.id)) return prev;
+        if (prev.getNotifications.find((n: any) => n.id === newNotification.id))
+          return prev;
 
         return {
           ...prev,
@@ -73,7 +85,8 @@ export const Activity = () => {
     });
   }, [session, subscribeToMore]);
 
-  if (loading) return <div className="p-4 text-center">Loading notifications...</div>;
+  if (loading)
+    return <div className="p-4 text-center">Loading notifications...</div>;
 
   const notifications = data?.getNotifications || [];
 

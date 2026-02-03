@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 export const useClassNames = () => {
   const classNames = (...classes: string[]) =>
-    classes.filter(Boolean).join(" ");
+    classes.filter(Boolean).join(' ');
 
   return {
     classNames,
@@ -17,10 +17,10 @@ export const useDocumentClicked = () => {
       setClicked(false);
     };
 
-    document.addEventListener("mousedown", onclick);
+    document.addEventListener('mousedown', onclick);
 
     return () => {
-      document.removeEventListener("mousedown", onclick);
+      document.removeEventListener('mousedown', onclick);
     };
   }, []);
 
@@ -29,10 +29,10 @@ export const useDocumentClicked = () => {
 
 export const Login = async (url: string, data: Record<string, any>) => {
   const response = await fetch(url, {
-    method: "POST",
+    method: 'POST',
 
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
 
     body: JSON.stringify({

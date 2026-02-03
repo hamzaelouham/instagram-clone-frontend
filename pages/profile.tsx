@@ -1,6 +1,6 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { Header } from "../components";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import { Header } from '../components';
 
 const ProfilePage: NextPage = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   BookmarkIcon,
   ChatIcon,
@@ -6,12 +6,12 @@ import {
   EmojiHappyIcon,
   HeartIcon,
   PaperAirplaneIcon,
-} from "@heroicons/react/outline";
-import { HeartIcon as FillHeartIcon } from "@heroicons/react/solid";
-import { useMutation } from "@apollo/client";
-import { TOGGLE_LIKE_MUTATION, ADD_COMMENT_MUTATION } from "../utils/mutations";
-import { GET_POST } from "../utils/queries";
-import toast from "react-hot-toast";
+} from '@heroicons/react/outline';
+import { HeartIcon as FillHeartIcon } from '@heroicons/react/solid';
+import { useMutation } from '@apollo/client';
+import { TOGGLE_LIKE_MUTATION, ADD_COMMENT_MUTATION } from '../utils/mutations';
+import { GET_POST } from '../utils/queries';
+import toast from 'react-hot-toast';
 
 interface postProps {
   postId: string;
@@ -34,7 +34,7 @@ export const Post = ({
   hasLiked,
   comments: initialComments,
 }: postProps) => {
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
 
   const [toggleLike] = useMutation(TOGGLE_LIKE_MUTATION, {
     refetchQueries: [{ query: GET_POST }],
@@ -58,8 +58,8 @@ export const Post = ({
 
     try {
       await addComment({ variables: { text: comment, postId } });
-      setComment("");
-      toast.success("Comment added!");
+      setComment('');
+      toast.success('Comment added!');
     } catch (err: any) {
       toast.error(err.message);
     }
@@ -89,7 +89,10 @@ export const Post = ({
               onClick={handleLike}
             />
           ) : (
-            <HeartIcon className="btn transition ease-in" onClick={handleLike} />
+            <HeartIcon
+              className="btn transition ease-in"
+              onClick={handleLike}
+            />
           )}
 
           <ChatIcon className="btn" />
@@ -114,11 +117,11 @@ export const Post = ({
             <div key={comment.id} className="flex items-center space-x-2 mb-3">
               <img
                 className="h-7 rounded-full"
-                src={comment.author.image || "/images/avatars/default.jpg"}
+                src={comment.author.image || '/images/avatars/default.jpg'}
                 alt=""
               />
               <p className="text-sm flex-1">
-                <span className="font-bold">{comment.author.name}</span>{" "}
+                <span className="font-bold">{comment.author.name}</span>{' '}
                 {comment.text}
               </p>
             </div>

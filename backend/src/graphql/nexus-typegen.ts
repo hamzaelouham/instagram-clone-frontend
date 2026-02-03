@@ -3,14 +3,16 @@
  * Do not make changes to this file directly
  */
 
-
-import type { core } from "nexus"
+import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
      * A custom scalar type representing a date and time.
      */
-    date<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+    date<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
+    ): void; // "DateTime";
   }
 }
 declare global {
@@ -18,54 +20,60 @@ declare global {
     /**
      * A custom scalar type representing a date and time.
      */
-    date<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+    date<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void; // "DateTime";
   }
 }
-
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
-export interface NexusGenInputs {
-}
+export interface NexusGenInputs {}
 
 export interface NexusGenEnums {
-  NotificationType: "COMMENT" | "FOLLOW" | "LIKE"
+  NotificationType: 'COMMENT' | 'FOLLOW' | 'LIKE';
 }
 
 export interface NexusGenScalars {
-  String: string
-  Int: number
-  Float: number
-  Boolean: boolean
-  ID: string
-  DateTime: any
+  String: string;
+  Int: number;
+  Float: number;
+  Boolean: boolean;
+  ID: string;
+  DateTime: any;
 }
 
 export interface NexusGenObjects {
-  AuthResponse: { // root type
+  AuthResponse: {
+    // root type
     message?: string | null; // String
-  }
-  Comment: { // root type
+  };
+  Comment: {
+    // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     text?: string | null; // String
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  Edge: { // root type
+  };
+  Edge: {
+    // root type
     cursor?: string | null; // String
     node?: NexusGenRootTypes['Post'] | null; // Post
-  }
-  Me: { // root type
+  };
+  Me: {
+    // root type
     email?: string | null; // String
     fullname?: string | null; // String
     image?: string | null; // String
     name?: string | null; // String
     userId?: string | null; // String
-  }
+  };
   Mutation: {};
-  Notification: { // root type
+  Notification: {
+    // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     post?: NexusGenRootTypes['Post'] | null; // Post
@@ -73,40 +81,46 @@ export interface NexusGenObjects {
     recipient?: NexusGenRootTypes['User'] | null; // User
     sender?: NexusGenRootTypes['User'] | null; // User
     type?: NexusGenEnums['NotificationType'] | null; // NotificationType
-  }
-  PageInfo: { // root type
+  };
+  PageInfo: {
+    // root type
     endCursor?: string | null; // String
     hasNextPage?: boolean | null; // Boolean
-  }
-  Post: { // root type
+  };
+  Post: {
+    // root type
     caption?: string | null; // String
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     imageUrl?: string | null; // String
     likesCount?: number | null; // Int
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
+  };
   Query: {};
-  Response: { // root type
+  Response: {
+    // root type
     edges?: Array<NexusGenRootTypes['Edge'] | null> | null; // [Edge]
     pageInfo?: NexusGenRootTypes['PageInfo'] | null; // PageInfo
-  }
-  Session: { // root type
+  };
+  Session: {
+    // root type
     accessToken?: string | null; // String
     email?: string | null; // String
     fullname?: string | null; // String
     image?: string | null; // String
     name?: string | null; // String
     userId?: string | null; // String
-  }
-  Story: { // root type
+  };
+  Story: {
+    // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     expiresAt?: NexusGenScalars['DateTime'] | null; // DateTime
     id?: string | null; // String
     imageUrl?: string | null; // String
-  }
+  };
   Subscription: {};
-  User: { // root type
+  User: {
+    // root type
     createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email?: string | null; // String
     fullname?: string | null; // String
@@ -115,43 +129,48 @@ export interface NexusGenObjects {
     name?: string | null; // String
     password?: string | null; // String
     updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
+  };
 }
 
-export interface NexusGenInterfaces {
-}
+export interface NexusGenInterfaces {}
 
-export interface NexusGenUnions {
-}
+export interface NexusGenUnions {}
 
-export type NexusGenRootTypes = NexusGenObjects
+export type NexusGenRootTypes = NexusGenObjects;
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
+export type NexusGenAllTypes = NexusGenRootTypes &
+  NexusGenScalars &
+  NexusGenEnums;
 
 export interface NexusGenFieldTypes {
-  AuthResponse: { // field return type
+  AuthResponse: {
+    // field return type
     message: string | null; // String
-  }
-  Comment: { // field return type
+  };
+  Comment: {
+    // field return type
     author: NexusGenRootTypes['User'] | null; // User
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     id: string | null; // String
     post: NexusGenRootTypes['Post'] | null; // Post
     text: string | null; // String
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  Edge: { // field return type
+  };
+  Edge: {
+    // field return type
     cursor: string | null; // String
     node: NexusGenRootTypes['Post'] | null; // Post
-  }
-  Me: { // field return type
+  };
+  Me: {
+    // field return type
     email: string | null; // String
     fullname: string | null; // String
     image: string | null; // String
     name: string | null; // String
     userId: string | null; // String
-  }
-  Mutation: { // field return type
+  };
+  Mutation: {
+    // field return type
     addComment: NexusGenRootTypes['Comment'] | null; // Comment
     createPost: NexusGenRootTypes['Post'] | null; // Post
     createStory: NexusGenRootTypes['Story'] | null; // Story
@@ -166,8 +185,9 @@ export interface NexusGenFieldTypes {
     testNotification: NexusGenRootTypes['Notification'] | null; // Notification
     toggleLike: NexusGenRootTypes['Post'] | null; // Post
     unlikePost: NexusGenRootTypes['Post'] | null; // Post
-  }
-  Notification: { // field return type
+  };
+  Notification: {
+    // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     id: string | null; // String
     post: NexusGenRootTypes['Post'] | null; // Post
@@ -175,12 +195,14 @@ export interface NexusGenFieldTypes {
     recipient: NexusGenRootTypes['User'] | null; // User
     sender: NexusGenRootTypes['User'] | null; // User
     type: NexusGenEnums['NotificationType'] | null; // NotificationType
-  }
-  PageInfo: { // field return type
+  };
+  PageInfo: {
+    // field return type
     endCursor: string | null; // String
     hasNextPage: boolean | null; // Boolean
-  }
-  Post: { // field return type
+  };
+  Post: {
+    // field return type
     author: NexusGenRootTypes['User'] | null; // User
     caption: string | null; // String
     comments: Array<NexusGenRootTypes['Comment'] | null> | null; // [Comment]
@@ -190,8 +212,9 @@ export interface NexusGenFieldTypes {
     imageUrl: string | null; // String
     likesCount: number | null; // Int
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  Query: { // field return type
+  };
+  Query: {
+    // field return type
     explorePosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getAllPosts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     getNotifications: Array<NexusGenRootTypes['Notification'] | null> | null; // [Notification]
@@ -202,30 +225,35 @@ export interface NexusGenFieldTypes {
     getUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     me: NexusGenRootTypes['Me'] | null; // Me
     posts: NexusGenRootTypes['Response'] | null; // Response
-  }
-  Response: { // field return type
+  };
+  Response: {
+    // field return type
     edges: Array<NexusGenRootTypes['Edge'] | null> | null; // [Edge]
     pageInfo: NexusGenRootTypes['PageInfo'] | null; // PageInfo
-  }
-  Session: { // field return type
+  };
+  Session: {
+    // field return type
     accessToken: string | null; // String
     email: string | null; // String
     fullname: string | null; // String
     image: string | null; // String
     name: string | null; // String
     userId: string | null; // String
-  }
-  Story: { // field return type
+  };
+  Story: {
+    // field return type
     author: NexusGenRootTypes['User'] | null; // User
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     expiresAt: NexusGenScalars['DateTime'] | null; // DateTime
     id: string | null; // String
     imageUrl: string | null; // String
-  }
-  Subscription: { // field return type
+  };
+  Subscription: {
+    // field return type
     notificationCreated: NexusGenRootTypes['Notification'] | null; // Notification
-  }
-  User: { // field return type
+  };
+  User: {
+    // field return type
     createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string | null; // String
     followers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
@@ -237,192 +265,221 @@ export interface NexusGenFieldTypes {
     password: string | null; // String
     posts: Array<NexusGenRootTypes['Post'] | null> | null; // [Post]
     updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
-  }
+  };
 }
 
 export interface NexusGenFieldTypeNames {
-  AuthResponse: { // field return type name
-    message: 'String'
-  }
-  Comment: { // field return type name
-    author: 'User'
-    createdAt: 'DateTime'
-    id: 'String'
-    post: 'Post'
-    text: 'String'
-    updatedAt: 'DateTime'
-  }
-  Edge: { // field return type name
-    cursor: 'String'
-    node: 'Post'
-  }
-  Me: { // field return type name
-    email: 'String'
-    fullname: 'String'
-    image: 'String'
-    name: 'String'
-    userId: 'String'
-  }
-  Mutation: { // field return type name
-    addComment: 'Comment'
-    createPost: 'Post'
-    createStory: 'Story'
-    deletePost: 'Post'
-    followUser: 'User'
-    likePost: 'Post'
-    login: 'Session'
-    markNotificationAsRead: 'Notification'
-    register: 'User'
-    requestPasswordReset: 'AuthResponse'
-    resetPassword: 'AuthResponse'
-    testNotification: 'Notification'
-    toggleLike: 'Post'
-    unlikePost: 'Post'
-  }
-  Notification: { // field return type name
-    createdAt: 'DateTime'
-    id: 'String'
-    post: 'Post'
-    read: 'Boolean'
-    recipient: 'User'
-    sender: 'User'
-    type: 'NotificationType'
-  }
-  PageInfo: { // field return type name
-    endCursor: 'String'
-    hasNextPage: 'Boolean'
-  }
-  Post: { // field return type name
-    author: 'User'
-    caption: 'String'
-    comments: 'Comment'
-    createdAt: 'DateTime'
-    hasLiked: 'Boolean'
-    id: 'String'
-    imageUrl: 'String'
-    likesCount: 'Int'
-    updatedAt: 'DateTime'
-  }
-  Query: { // field return type name
-    explorePosts: 'Post'
-    getAllPosts: 'Post'
-    getNotifications: 'Notification'
-    getPost: 'Post'
-    getStories: 'Story'
-    getSuggestions: 'User'
-    getUserById: 'User'
-    getUsers: 'User'
-    me: 'Me'
-    posts: 'Response'
-  }
-  Response: { // field return type name
-    edges: 'Edge'
-    pageInfo: 'PageInfo'
-  }
-  Session: { // field return type name
-    accessToken: 'String'
-    email: 'String'
-    fullname: 'String'
-    image: 'String'
-    name: 'String'
-    userId: 'String'
-  }
-  Story: { // field return type name
-    author: 'User'
-    createdAt: 'DateTime'
-    expiresAt: 'DateTime'
-    id: 'String'
-    imageUrl: 'String'
-  }
-  Subscription: { // field return type name
-    notificationCreated: 'Notification'
-  }
-  User: { // field return type name
-    createdAt: 'DateTime'
-    email: 'String'
-    followers: 'User'
-    following: 'User'
-    fullname: 'String'
-    id: 'String'
-    image: 'String'
-    name: 'String'
-    password: 'String'
-    posts: 'Post'
-    updatedAt: 'DateTime'
-  }
+  AuthResponse: {
+    // field return type name
+    message: 'String';
+  };
+  Comment: {
+    // field return type name
+    author: 'User';
+    createdAt: 'DateTime';
+    id: 'String';
+    post: 'Post';
+    text: 'String';
+    updatedAt: 'DateTime';
+  };
+  Edge: {
+    // field return type name
+    cursor: 'String';
+    node: 'Post';
+  };
+  Me: {
+    // field return type name
+    email: 'String';
+    fullname: 'String';
+    image: 'String';
+    name: 'String';
+    userId: 'String';
+  };
+  Mutation: {
+    // field return type name
+    addComment: 'Comment';
+    createPost: 'Post';
+    createStory: 'Story';
+    deletePost: 'Post';
+    followUser: 'User';
+    likePost: 'Post';
+    login: 'Session';
+    markNotificationAsRead: 'Notification';
+    register: 'User';
+    requestPasswordReset: 'AuthResponse';
+    resetPassword: 'AuthResponse';
+    testNotification: 'Notification';
+    toggleLike: 'Post';
+    unlikePost: 'Post';
+  };
+  Notification: {
+    // field return type name
+    createdAt: 'DateTime';
+    id: 'String';
+    post: 'Post';
+    read: 'Boolean';
+    recipient: 'User';
+    sender: 'User';
+    type: 'NotificationType';
+  };
+  PageInfo: {
+    // field return type name
+    endCursor: 'String';
+    hasNextPage: 'Boolean';
+  };
+  Post: {
+    // field return type name
+    author: 'User';
+    caption: 'String';
+    comments: 'Comment';
+    createdAt: 'DateTime';
+    hasLiked: 'Boolean';
+    id: 'String';
+    imageUrl: 'String';
+    likesCount: 'Int';
+    updatedAt: 'DateTime';
+  };
+  Query: {
+    // field return type name
+    explorePosts: 'Post';
+    getAllPosts: 'Post';
+    getNotifications: 'Notification';
+    getPost: 'Post';
+    getStories: 'Story';
+    getSuggestions: 'User';
+    getUserById: 'User';
+    getUsers: 'User';
+    me: 'Me';
+    posts: 'Response';
+  };
+  Response: {
+    // field return type name
+    edges: 'Edge';
+    pageInfo: 'PageInfo';
+  };
+  Session: {
+    // field return type name
+    accessToken: 'String';
+    email: 'String';
+    fullname: 'String';
+    image: 'String';
+    name: 'String';
+    userId: 'String';
+  };
+  Story: {
+    // field return type name
+    author: 'User';
+    createdAt: 'DateTime';
+    expiresAt: 'DateTime';
+    id: 'String';
+    imageUrl: 'String';
+  };
+  Subscription: {
+    // field return type name
+    notificationCreated: 'Notification';
+  };
+  User: {
+    // field return type name
+    createdAt: 'DateTime';
+    email: 'String';
+    followers: 'User';
+    following: 'User';
+    fullname: 'String';
+    id: 'String';
+    image: 'String';
+    name: 'String';
+    password: 'String';
+    posts: 'Post';
+    updatedAt: 'DateTime';
+  };
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
-    addComment: { // args
+    addComment: {
+      // args
       postId: string; // String!
       text: string; // String!
-    }
-    createPost: { // args
+    };
+    createPost: {
+      // args
       caption?: string | null; // String
       imageUrl: string; // String!
-    }
-    createStory: { // args
+    };
+    createStory: {
+      // args
       imageUrl: string; // String!
-    }
-    deletePost: { // args
+    };
+    deletePost: {
+      // args
       id: string; // String!
-    }
-    followUser: { // args
+    };
+    followUser: {
+      // args
       userId: string; // String!
-    }
-    likePost: { // args
+    };
+    likePost: {
+      // args
       id: string; // String!
-    }
-    login: { // args
+    };
+    login: {
+      // args
       email: string; // String!
       password: string; // String!
-    }
-    markNotificationAsRead: { // args
+    };
+    markNotificationAsRead: {
+      // args
       id: string; // String!
-    }
-    register: { // args
+    };
+    register: {
+      // args
       email: string; // String!
       fullname?: string | null; // String
       name?: string | null; // String
       password: string; // String!
-    }
-    requestPasswordReset: { // args
+    };
+    requestPasswordReset: {
+      // args
       email: string; // String!
-    }
-    resetPassword: { // args
+    };
+    resetPassword: {
+      // args
       password: string; // String!
       token: string; // String!
-    }
-    testNotification: { // args
+    };
+    testNotification: {
+      // args
       recipientId: string; // String!
-    }
-    toggleLike: { // args
+    };
+    toggleLike: {
+      // args
       id: string; // String!
-    }
-    unlikePost: { // args
+    };
+    unlikePost: {
+      // args
       id: string; // String!
-    }
-  }
+    };
+  };
   Query: {
-    getPost: { // args
+    getPost: {
+      // args
       id: string; // ID!
-    }
-    getUserById: { // args
+    };
+    getUserById: {
+      // args
       id: string; // ID!
-    }
-    posts: { // args
+    };
+    posts: {
+      // args
       after?: string | null; // String
       first?: number | null; // Int
-    }
-  }
+    };
+  };
 }
 
-export interface NexusGenAbstractTypeMembers {
-}
+export interface NexusGenAbstractTypeMembers {}
 
-export interface NexusGenTypeInterfaces {
-}
+export interface NexusGenTypeInterfaces {}
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
@@ -442,11 +499,11 @@ export type NexusGenAbstractsUsingStrategyResolveType = never;
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
-    isTypeOf: false
-    resolveType: true
-    __typename: false
-  }
-}
+    isTypeOf: false;
+    resolveType: true;
+    __typename: false;
+  };
+};
 
 export interface NexusGenTypes {
   context: any;
@@ -464,9 +521,19 @@ export interface NexusGenTypes {
   interfaceNames: NexusGenInterfaceNames;
   scalarNames: NexusGenScalarNames;
   unionNames: NexusGenUnionNames;
-  allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
-  allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
-  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
+  allInputTypes:
+    | NexusGenTypes['inputNames']
+    | NexusGenTypes['enumNames']
+    | NexusGenTypes['scalarNames'];
+  allOutputTypes:
+    | NexusGenTypes['objectNames']
+    | NexusGenTypes['enumNames']
+    | NexusGenTypes['unionNames']
+    | NexusGenTypes['interfaceNames']
+    | NexusGenTypes['scalarNames'];
+  allNamedTypes:
+    | NexusGenTypes['allInputTypes']
+    | NexusGenTypes['allOutputTypes'];
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
   abstractTypeMembers: NexusGenAbstractTypeMembers;
   objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
@@ -474,18 +541,17 @@ export interface NexusGenTypes {
   features: NexusGenFeaturesConfig;
 }
 
-
 declare global {
-  interface NexusGenPluginTypeConfig<TypeName extends string> {
-  }
-  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
-  }
-  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
-  }
-  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
-  }
-  interface NexusGenPluginSchemaConfig {
-  }
-  interface NexusGenPluginArgConfig {
-  }
+  interface NexusGenPluginTypeConfig<TypeName extends string> {}
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {}
+  interface NexusGenPluginFieldConfig<
+    TypeName extends string,
+    FieldName extends string,
+  > {}
+  interface NexusGenPluginInputFieldConfig<
+    TypeName extends string,
+    FieldName extends string,
+  > {}
+  interface NexusGenPluginSchemaConfig {}
+  interface NexusGenPluginArgConfig {}
 }

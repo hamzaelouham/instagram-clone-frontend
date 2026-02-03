@@ -1,10 +1,10 @@
 // import { NexusGenObjects } from "../graphql/nexus-typegen";
-import { context } from "../utils/types";
+import { context } from '../utils/types';
 
 // : Promise<NexusGenObjects["User"][] | null>
 // : Promise<NexusGenObjects["User"] | null>
 
-import NotificationService from "./notification.service";
+import NotificationService from './notification.service';
 
 class User {
   async getUsers(ctx: context) {
@@ -19,7 +19,7 @@ class User {
   }
   async getSuggestions(ctx: context) {
     if (!ctx.req.user) {
-      throw new Error("Log in to get suggestions");
+      throw new Error('Log in to get suggestions');
     }
 
     // Get users you are NOT following and NOT yourself
@@ -44,7 +44,7 @@ class User {
     const userId = ctx.req?.user?.userId;
     console.log(`followUser called. From: ${userId}, To: ${userIdToFollow}`);
     if (!ctx.req.user) {
-      throw new Error("Log in to follow users");
+      throw new Error('Log in to follow users');
     }
 
     const updatedUser = await ctx.db.user.update({
@@ -59,7 +59,7 @@ class User {
     // Notify the user being followed
     await NotificationService.createNotification(
       {
-        type: "FOLLOW",
+        type: 'FOLLOW',
         recipientId: userIdToFollow,
         senderId: ctx.req.user.userId,
       },

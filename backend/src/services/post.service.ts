@@ -1,5 +1,5 @@
-import { context } from "../utils/types";
-import NotificationService from "./notification.service";
+import { context } from '../utils/types';
+import NotificationService from './notification.service';
 
 class Post {
   async createPost(_: any, args: any, ctx: context) {
@@ -33,12 +33,12 @@ class Post {
     }
   }
 
-  async updatePost(_: any, args: any, ctx: context) { }
+  async updatePost(_: any, args: any, ctx: context) {}
 
   async getAllPosts(ctx: context) {
     const posts = await ctx.db.post.findMany({
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
     });
 
@@ -54,7 +54,7 @@ class Post {
         },
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
     });
   }
@@ -72,7 +72,7 @@ class Post {
   async toggleLikePost(postId: string, ctx: context) {
     const userId = ctx.req?.user?.userId;
     console.log(`toggleLikePost called. User: ${userId}, Post: ${postId}`);
-    if (!userId) throw new Error("You must be logged in to like a post");
+    if (!userId) throw new Error('You must be logged in to like a post');
 
     const existingLike = await ctx.db.like.findUnique({
       where: {
@@ -109,7 +109,7 @@ class Post {
       // Notify post author
       await NotificationService.createNotification(
         {
-          type: "LIKE",
+          type: 'LIKE',
           recipientId: updatedPost.authorId,
           senderId: userId,
           postId: postId,
@@ -147,15 +147,15 @@ class Post {
           id: args.after,
         },
         orderBy: {
-          createdAt: "desc"
-        }
+          createdAt: 'desc',
+        },
       });
     } else {
       queryResult = await ctx.db.post.findMany({
         take: args.first,
         orderBy: {
-          createdAt: "desc"
-        }
+          createdAt: 'desc',
+        },
       });
     }
 
@@ -168,8 +168,8 @@ class Post {
           id: cursor,
         },
         orderBy: {
-          createdAt: "desc"
-        }
+          createdAt: 'desc',
+        },
       });
       const result = {
         pageInfo: {

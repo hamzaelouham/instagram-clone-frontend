@@ -2,7 +2,7 @@ export const HomeIcon = ({ className, onClick }: any) => {
   return (
     <svg
       aria-label="home"
-      className={className || "h-6 text-black dark:text-white cursor-pointer"}
+      className={className || 'h-6 text-black dark:text-white cursor-pointer'}
       onClick={onClick}
       height="24"
       role="img"

@@ -1,9 +1,9 @@
-import { withAuth } from "next-auth/middleware";
+import { withAuth } from 'next-auth/middleware';
 
 export default withAuth({
-    pages: {
-        signIn: "/auth",
-    },
+  pages: {
+    signIn: '/auth',
+  },
 });
 
-export const config = { matcher: ["/", "/notification", "/explore"] };
+export const config = { matcher: ['/', '/notification', '/explore'] };

@@ -1,20 +1,20 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";
-import CommentService from "../../services/comment.service";
-import { context } from "../../utils/types";
+import { extendType, nonNull, objectType, stringArg } from 'nexus';
+import CommentService from '../../services/comment.service';
+import { context } from '../../utils/types';
 
 export const Comment = objectType({
-  name: "Comment",
+  name: 'Comment',
   definition(t) {
-    t.string("id");
-    t.string("text");
-    t.field("createdAt", {
-      type: "DateTime",
+    t.string('id');
+    t.string('text');
+    t.field('createdAt', {
+      type: 'DateTime',
     });
-    t.field("updatedAt", {
-      type: "DateTime",
+    t.field('updatedAt', {
+      type: 'DateTime',
     });
-    t.field("author", {
-      type: "User",
+    t.field('author', {
+      type: 'User',
       resolve: (parent, _args, ctx: context) => {
         return ctx.db.comment
           .findUnique({
@@ -23,8 +23,8 @@ export const Comment = objectType({
           .author();
       },
     });
-    t.field("post", {
-      type: "Post",
+    t.field('post', {
+      type: 'Post',
       resolve: (parent, _args, ctx: context) => {
         return ctx.db.comment
           .findUnique({
@@ -37,10 +37,10 @@ export const Comment = objectType({
 });
 
 export const commentMutation = extendType({
-  type: "Mutation",
+  type: 'Mutation',
   definition(t) {
-    t.field("addComment", {
-      type: "Comment",
+    t.field('addComment', {
+      type: 'Comment',
       args: {
         text: nonNull(stringArg()),
         postId: nonNull(stringArg()),

@@ -1,4 +1,4 @@
-import { ReelsIcon } from "../";
+import { ReelsIcon } from '../';
 
 interface Props {
   posts: any[];

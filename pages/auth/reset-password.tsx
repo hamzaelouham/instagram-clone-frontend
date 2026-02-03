@@ -1,18 +1,18 @@
-import type { NextPage } from "next";
-import { LockClosedIcon } from "@heroicons/react/outline";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Head from "next/head";
-import { useMutation } from "@apollo/client";
-import { RESET_PASSWORD_MUTATION } from "../../utils/mutations";
-import toast from "react-hot-toast";
-import Link from "next/link";
+import type { NextPage } from 'next';
+import { LockClosedIcon } from '@heroicons/react/outline';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import { useMutation } from '@apollo/client';
+import { RESET_PASSWORD_MUTATION } from '../../utils/mutations';
+import toast from 'react-hot-toast';
+import Link from 'next/link';
 
 const ResetPassword: NextPage = () => {
   const router = useRouter();
   const { token } = router.query;
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading_page, setLoadingPage] = useState(true);
 
   const [resetPassword, { loading }] = useMutation(RESET_PASSWORD_MUTATION);
@@ -20,8 +20,8 @@ const ResetPassword: NextPage = () => {
   useEffect(() => {
     if (router.isReady) {
       if (!token) {
-        toast.error("Invalid reset link");
-        router.push("/auth/forgot-password");
+        toast.error('Invalid reset link');
+        router.push('/auth/forgot-password');
       }
       setLoadingPage(false);
     }
@@ -30,10 +30,10 @@ const ResetPassword: NextPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      return toast.error("Passwords do not match");
+      return toast.error('Passwords do not match');
     }
     if (password.length < 6) {
-      return toast.error("Password must be at least 6 characters");
+      return toast.error('Password must be at least 6 characters');
     }
 
     try {
@@ -43,8 +43,8 @@ const ResetPassword: NextPage = () => {
           password,
         },
       });
-      toast.success("Password updated successfully!");
-      router.push("/auth/");
+      toast.success('Password updated successfully!');
+      router.push('/auth/');
     } catch (err: any) {
       toast.error(err.message);
     }
@@ -98,11 +98,11 @@ const ResetPassword: NextPage = () => {
               />
 
               <button
-                className={`insta-btn w-full bg-blue-500 ${loading ? "opacity-50" : ""}`}
+                className={`insta-btn w-full bg-blue-500 ${loading ? 'opacity-50' : ''}`}
                 type="submit"
                 disabled={loading}
               >
-                {loading ? "Updating..." : "Reset Password"}
+                {loading ? 'Updating...' : 'Reset Password'}
               </button>
             </form>
           </div>

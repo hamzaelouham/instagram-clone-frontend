@@ -1,27 +1,27 @@
-import Auth from "../../services/auth.service";
-import User from "../../services/user.service";
-import Post from "../../services/post.service";
-import { objectType, extendType, idArg, nonNull, stringArg } from "nexus";
-import { context } from "../../utils/types";
+import Auth from '../../services/auth.service';
+import User from '../../services/user.service';
+import Post from '../../services/post.service';
+import { objectType, extendType, idArg, nonNull, stringArg } from 'nexus';
+import { context } from '../../utils/types';
 
 export const user = objectType({
-  name: "User", // <- Name of your type
+  name: 'User', // <- Name of your type
   definition(t) {
-    t.string("id");
-    t.string("name");
-    t.string("fullname");
-    t.string("email");
-    t.string("password");
-    t.string("image");
-    t.field("createdAt", {
-      type: "DateTime",
+    t.string('id');
+    t.string('name');
+    t.string('fullname');
+    t.string('email');
+    t.string('password');
+    t.string('image');
+    t.field('createdAt', {
+      type: 'DateTime',
     });
-    t.field("updatedAt", {
-      type: "DateTime",
+    t.field('updatedAt', {
+      type: 'DateTime',
     });
 
-    t.list.field("posts", {
-      type: "Post",
+    t.list.field('posts', {
+      type: 'Post',
       resolve: async (parent, _args, ctx: context) =>
         await Post.getAllPosts(ctx),
       // return ctx.db.user
@@ -30,8 +30,8 @@ export const user = objectType({
       //   })
       //   .posts();
     });
-    t.list.field("followers", {
-      type: "User",
+    t.list.field('followers', {
+      type: 'User',
       resolve: (parent, _args, ctx) => {
         return ctx.db.user
           .findUnique({
@@ -40,8 +40,8 @@ export const user = objectType({
           .followers();
       },
     });
-    t.list.field("following", {
-      type: "User",
+    t.list.field('following', {
+      type: 'User',
       resolve: (parent, _args, ctx) => {
         return ctx.db.user
           .findUnique({
@@ -54,67 +54,67 @@ export const user = objectType({
 });
 
 export const session = objectType({
-  name: "Session", // <- Name of your type
+  name: 'Session', // <- Name of your type
   definition(t) {
-    t.string("userId");
-    t.string("name");
-    t.string("fullname"); // <- Field named `title` of type `String`
-    t.string("email"); // <- Field named `email` of type `String`
-    t.string("image");
-    t.string("accessToken");
+    t.string('userId');
+    t.string('name');
+    t.string('fullname'); // <- Field named `title` of type `String`
+    t.string('email'); // <- Field named `email` of type `String`
+    t.string('image');
+    t.string('accessToken');
   },
 });
 
 export const me = objectType({
-  name: "Me", // <- Name of your type
+  name: 'Me', // <- Name of your type
   definition(t) {
-    t.string("userId");
-    t.string("name");
-    t.string("fullname"); // <- Field named `title` of type `String`
-    t.string("email"); // <- Field named `email` of type `String`
-    t.string("image");
+    t.string('userId');
+    t.string('name');
+    t.string('fullname'); // <- Field named `title` of type `String`
+    t.string('email'); // <- Field named `email` of type `String`
+    t.string('image');
   },
 });
 
 export const userQuery = extendType({
-  type: "Query",
+  type: 'Query',
   definition(t) {
-    t.list.field("getUsers", {
-      type: "User",
+    (t.list.field('getUsers', {
+      type: 'User',
       resolve: async (_, __, ctx) => await User.getUsers(ctx),
     }),
-      t.field("getUserById", {
-        type: "User",
+      t.field('getUserById', {
+        type: 'User',
         args: {
           id: nonNull(idArg()),
         },
         resolve: async (_, args, ctx) => await User.getUserById(args.id, ctx),
       }),
-      t.list.field("getSuggestions", {
-        type: "User",
+      t.list.field('getSuggestions', {
+        type: 'User',
         resolve: async (_, __, ctx: context) => await User.getSuggestions(ctx),
       }),
-      t.field("me", {
-        type: "Me",
+      t.field('me', {
+        type: 'Me',
         resolve: (_, __, ctx) => {
           return ctx.req.user;
         },
-      });
+      }));
   },
 });
 
 export const authResponse = objectType({
-  name: "AuthResponse",
+  name: 'AuthResponse',
   definition(t) {
-    t.string("message");
+    t.string('message');
   },
 });
 
 export const userMutation = extendType({
-  type: "Mutation",
+  type: 'Mutation',
   definition(t) {
-    t.nonNull.field("register", {
-      type: "User",
+    (t.nonNull.field('register', {
+      type: 'User',
 
       args: {
         email: nonNull(stringArg()),
@@ -126,15 +126,15 @@ export const userMutation = extendType({
         return await Auth.register(args, ctx);
       },
     }),
-      t.nonNull.field("login", {
-        type: "Session",
+      t.nonNull.field('login', {
+        type: 'Session',
         args: { email: nonNull(stringArg()), password: nonNull(stringArg()) },
         resolve: async (_, args: any, ctx: context) => {
           return await Auth.login(args, ctx);
         },
       }),
-      t.nonNull.field("followUser", {
-        type: "User",
+      t.nonNull.field('followUser', {
+        type: 'User',
         args: {
           userId: nonNull(stringArg()),
         },
@@ -142,8 +142,8 @@ export const userMutation = extendType({
           return await User.followUser(args.userId, ctx);
         },
       }),
-      t.field("requestPasswordReset", {
-        type: "AuthResponse",
+      t.field('requestPasswordReset', {
+        type: 'AuthResponse',
         args: {
           email: nonNull(stringArg()),
         },
@@ -151,8 +151,8 @@ export const userMutation = extendType({
           return await Auth.requestPasswordReset(email, ctx);
         },
       }),
-      t.field("resetPassword", {
-        type: "AuthResponse",
+      t.field('resetPassword', {
+        type: 'AuthResponse',
         args: {
           token: nonNull(stringArg()),
           password: nonNull(stringArg()),
@@ -160,7 +160,6 @@ export const userMutation = extendType({
         resolve: async (_, args, ctx: context) => {
           return await Auth.resetPassword(args, ctx);
         },
-      });
+      }));
   },
 });
-

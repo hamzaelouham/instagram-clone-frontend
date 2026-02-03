@@ -1,13 +1,17 @@
-import React from "react";
-import { Story } from "./Story";
-import { useQuery } from "@apollo/client";
-import { GET_STORIES } from "../utils/queries";
+import React from 'react';
+import { Story } from './Story';
+import { useQuery } from '@apollo/client';
+import { GET_STORIES } from '../utils/queries';
 
 export const Stories: React.FC = () => {
   const { data, loading, error } = useQuery(GET_STORIES);
 
   if (error) {
-    return <div className="p-4 text-xs text-gray-400 italic">Unable to load stories</div>;
+    return (
+      <div className="p-4 text-xs text-gray-400 italic">
+        Unable to load stories
+      </div>
+    );
   }
 
   const stories = data?.getStories || [];
@@ -23,7 +27,7 @@ export const Stories: React.FC = () => {
           <Story
             key={story.id}
             me={false /* logic for me? */}
-            avatar={story.author.image || "/images/avatars/default.jpg"}
+            avatar={story.author.image || '/images/avatars/default.jpg'}
             username={story.author.name}
           />
         ))}

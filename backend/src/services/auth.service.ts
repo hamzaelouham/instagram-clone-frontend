@@ -1,5 +1,5 @@
-import { Compare, Hash, createToken } from "../utils";
-import { context } from "../utils/types";
+import { Compare, Hash, createToken } from '../utils';
+import { context } from '../utils/types';
 
 class Auth {
   async login(args: any, ctx: context) {
@@ -8,11 +8,11 @@ class Auth {
     });
 
     if (!user) {
-      throw new Error("No such user found");
+      throw new Error('No such user found');
     }
     const isValid = await Compare(args.password, user.password);
     if (!isValid) {
-      throw new Error("Invalid password");
+      throw new Error('Invalid password');
     }
 
     const accessToken = createToken({
@@ -34,7 +34,7 @@ class Auth {
     });
 
     if (user) {
-      throw new Error("email must be unique !, email already taken!");
+      throw new Error('email must be unique !, email already taken!');
     }
 
     user = await ctx.db.user.create({
@@ -47,23 +47,26 @@ class Auth {
     });
 
     if (!user) {
-      throw new Error("ops!, you are not registerd !");
+      throw new Error('ops!, you are not registerd !');
     }
 
     return user;
   }
 
-  async changePassword() { }
+  async changePassword() {}
 
   async requestPasswordReset(email: string, ctx: context) {
     const user = await ctx.db.user.findUnique({ where: { email } });
     if (!user) {
       // For security, don't reveal if user exists, but here we can throw or just return success
-      return { message: "If an account with that email exists, we have sent a reset link." };
+      return {
+        message:
+          'If an account with that email exists, we have sent a reset link.',
+      };
     }
 
-    const crypto = require("crypto");
-    const token = crypto.randomBytes(20).toString("hex");
+    const crypto = require('crypto');
+    const token = crypto.randomBytes(20).toString('hex');
     const expires = new Date(Date.now() + 3600000); // 1 hour
 
     await ctx.db.user.update({
@@ -77,7 +80,10 @@ class Auth {
     // MOCK EMAIL SENDING
     console.log(`[PASS_RESET] Token for ${email}: ${token}`);
 
-    return { message: "If an account with that email exists, we have sent a reset link." };
+    return {
+      message:
+        'If an account with that email exists, we have sent a reset link.',
+    };
   }
 
   async resetPassword({ token, password }: any, ctx: context) {
@@ -91,7 +97,7 @@ class Auth {
     });
 
     if (!user) {
-      throw new Error("Password reset token is invalid or has expired.");
+      throw new Error('Password reset token is invalid or has expired.');
     }
 
     await ctx.db.user.update({
@@ -103,7 +109,7 @@ class Auth {
       },
     });
 
-    return { message: "Success! Your password has been changed." };
+    return { message: 'Success! Your password has been changed.' };
   }
 }
 

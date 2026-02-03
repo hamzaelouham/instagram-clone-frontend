@@ -1,7 +1,7 @@
-import { useQuery, useMutation } from "@apollo/client";
-import { GET_SUGGESTIONS } from "../utils/queries";
-import { FOLLOW_USER_MUTATION } from "../utils/mutations";
-import toast from "react-hot-toast";
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_SUGGESTIONS } from '../utils/queries';
+import { FOLLOW_USER_MUTATION } from '../utils/mutations';
+import toast from 'react-hot-toast';
 
 export const Suggestion = () => {
   const { data, loading, error } = useQuery(GET_SUGGESTIONS);
@@ -17,7 +17,7 @@ export const Suggestion = () => {
   const handleFollow = async (userId: string) => {
     try {
       await followUser({ variables: { userId } });
-      toast.success("User followed!");
+      toast.success('User followed!');
     } catch (err: any) {
       toast.error(err.message);
     }
@@ -26,9 +26,7 @@ export const Suggestion = () => {
   return (
     <div className=" flex flex-col ">
       <div className="flex flex-row justify-between items-center pl-4 py-1 ">
-        <h2 className="font-bold text-sm text-gray-400">
-          Suggestions For You
-        </h2>
+        <h2 className="font-bold text-sm text-gray-400">Suggestions For You</h2>
         <button className="text-xs font-semibold line-h-sm text-black dark:text-white ring-0">
           See all
         </button>
@@ -36,9 +34,12 @@ export const Suggestion = () => {
 
       <div className="flex flex-col py-2">
         {suggestions.map((user: any) => (
-          <div key={user.id} className="flex flex-row items-center justify-between pl-4 py-1 ">
+          <div
+            key={user.id}
+            className="flex flex-row items-center justify-between pl-4 py-1 "
+          >
             <img
-              src={user.image || "/images/avatars/default.jpg"}
+              src={user.image || '/images/avatars/default.jpg'}
               alt={user.name}
               className="rounded-full w-8 h-8 mr-3"
             />

@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 import {
   HeartIcon,
   PaperAirplaneIcon,
   SearchIcon,
   HomeIcon,
-} from "@heroicons/react/outline";
-import { HomeIcon as HomeIconActive } from "@heroicons/react/solid";
+} from '@heroicons/react/outline';
+import { HomeIcon as HomeIconActive } from '@heroicons/react/solid';
 import {
   CameraIcon,
   RoundedPlus,
@@ -13,41 +13,83 @@ import {
   Model,
   ExploreIcon,
   ActiveExploreIcon,
-} from "./";
-import { Menu } from "@headlessui/react";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
+} from './';
+import { Menu } from '@headlessui/react';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 
-import { useQuery } from "@apollo/client";
-import { GET_NOTIFICATIONS, NOTIFICATION_CREATED_SUBSCRIPTION } from "../utils/queries";
+import { useQuery } from '@apollo/client';
+import {
+  GET_NOTIFICATIONS,
+  NOTIFICATION_CREATED_SUBSCRIPTION,
+} from '../utils/queries';
 
 export const Header: React.FC = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const router = useRouter();
+  const subRef = React.useRef<any>(null);
 
   const { data: notifData, subscribeToMore } = useQuery(GET_NOTIFICATIONS, {
-    skip: !session,
+    skip: status !== 'authenticated',
   });
 
   React.useEffect(() => {
-    if (!session) return;
-    return subscribeToMore({
+    // Only subscribe when fully authenticated with a valid token
+    console.log(
+      'HEADER: useEffect trigger. Status:',
+      status,
+      'Token:',
+      !!session?.user?.accessToken
+    );
+
+    if (status !== 'authenticated' || !session?.user?.accessToken) {
+      if (subRef.current) {
+        console.log(
+          'HEADER: Cleaning up stale subscription due to auth change'
+        );
+        subRef.current();
+        subRef.current = null;
+      }
+      return;
+    }
+
+    // Prevent double subscription
+    if (subRef.current) {
+      console.log('HEADER: Already subscribed, skipping...');
+      return;
+    }
+
+    console.log('HEADER: Creating subscription...');
+    const unsubscribe = subscribeToMore({
       document: NOTIFICATION_CREATED_SUBSCRIPTION,
       updateQuery: (prev, { subscriptionData }) => {
+        console.log('HEADER: Received data!', subscriptionData);
         if (!subscriptionData.data) return prev;
         const newNotif = subscriptionData.data.notificationCreated;
-        if (prev.getNotifications.find((n: any) => n.id === newNotif.id)) return prev;
+        if (prev?.getNotifications?.find((n: any) => n.id === newNotif.id))
+          return prev;
         return {
           ...prev,
-          getNotifications: [newNotif, ...prev.getNotifications],
+          getNotifications: [newNotif, ...(prev?.getNotifications || [])],
         };
       },
     });
-  }, [session, subscribeToMore]);
 
-  const unreadCount = notifData?.getNotifications.filter((n: any) => !n.read).length || 0;
+    subRef.current = unsubscribe;
+
+    return () => {
+      console.log('HEADER: Unmounting/Cleaning up subscription...');
+      if (subRef.current) {
+        subRef.current();
+        subRef.current = null;
+      }
+    };
+  }, [status, session?.user?.accessToken, subscribeToMore]);
+
+  const unreadCount =
+    notifData?.getNotifications.filter((n: any) => !n.read).length || 0;
 
   const closeModal = () => {
     setIsOpen(false);
@@ -94,7 +136,7 @@ export const Header: React.FC = () => {
             </div>
             <div className="flex items-center justify-end space-x-4 ">
               <Link href="/">
-                {router.pathname === "/" ? (
+                {router.pathname === '/' ? (
                   <HomeIconActive className="icons " />
                 ) : (
                   <HomeIcon className="icons " />
@@ -111,7 +153,7 @@ export const Header: React.FC = () => {
               </button>
 
               <Link href="/explore">
-                {router.pathname === "/explore" ? (
+                {router.pathname === '/explore' ? (
                   <ActiveExploreIcon className="icons" />
                 ) : (
                   <ExploreIcon className="icons" />
@@ -123,7 +165,7 @@ export const Header: React.FC = () => {
                   <HeartIcon className="icons" />
                   {unreadCount > 0 && (
                     <div className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] rounded-full h-4 w-4 flex items-center justify-center border-2 border-white dark:border-dark font-bold">
-                      {unreadCount > 9 ? "9+" : unreadCount}
+                      {unreadCount > 9 ? '9+' : unreadCount}
                     </div>
                   )}
                 </div>
@@ -132,7 +174,7 @@ export const Header: React.FC = () => {
               <Menu as="div" className="relative inline-block">
                 <Menu.Button className="cursor-pointer focus:outline-none">
                   <img
-                    src={session?.user?.image || "/images/avatars/default.png"}
+                    src={session?.user?.image || '/images/avatars/default.png'}
                     alt="avatar"
                     className="h-6 w-6 rounded-full cursor-pointer"
                   />

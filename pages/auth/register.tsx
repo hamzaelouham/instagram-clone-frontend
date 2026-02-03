@@ -1,13 +1,13 @@
-import React from "react";
-import type { NextPage } from "next";
-import Link from "next/link";
-import { Formik, Form, Field } from "formik";
-import * as yup from "yup";
-import Head from "next/head";
-import { useMutation } from "@apollo/client";
-import { REGISTER_MUTATION } from "../../utils/mutations";
-import { useRouter } from "next/router";
-import toast from "react-hot-toast";
+import React from 'react';
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import { Formik, Form, Field } from 'formik';
+import * as yup from 'yup';
+import Head from 'next/head';
+import { useMutation } from '@apollo/client';
+import { REGISTER_MUTATION } from '../../utils/mutations';
+import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
 
 interface formValues {
   fullName: string;
@@ -29,8 +29,8 @@ const Register: NextPage = () => {
         email: values.email,
       },
       onCompleted: () => {
-        toast.success("Successfully registered !");
-        router.push("/auth/");
+        toast.success('Successfully registered !');
+        router.push('/auth/');
       },
       onError: (e) => {
         toast.error(e.message);
@@ -46,10 +46,10 @@ const Register: NextPage = () => {
   });
 
   const initialValues: formValues = {
-    fullName: "",
-    userName: "",
-    email: "",
-    password: "",
+    fullName: '',
+    userName: '',
+    email: '',
+    password: '',
   };
 
   return (
@@ -115,7 +115,8 @@ const Register: NextPage = () => {
                       />
                       <button
                         type="submit"
-                        className={`insta-btn mx-8 mt-2 mb-2  ${!!errors.email ||
+                        className={`insta-btn mx-8 mt-2 mb-2  ${
+                          !!errors.email ||
                           !!errors.fullName ||
                           !touched.fullName ||
                           !touched.email ||
@@ -124,9 +125,9 @@ const Register: NextPage = () => {
                           !touched.password ||
                           !!errors.password ||
                           loading
-                          ? "cursor-not-allowed"
-                          : "acive-btn"
-                          }`}
+                            ? 'cursor-not-allowed'
+                            : 'acive-btn'
+                        }`}
                         disabled={
                           !!errors.email ||
                           !!errors.fullName ||
@@ -134,7 +135,7 @@ const Register: NextPage = () => {
                           !!errors.password
                         }
                       >
-                        {loading ? "loading..." : "Sign Up"}
+                        {loading ? 'loading...' : 'Sign Up'}
                       </button>
 
                       <div className="flex flex-row justify-center items-center mx-[40px] mt-[10px] mb-[18px]">
@@ -185,7 +186,7 @@ const Register: NextPage = () => {
             </div>
             <div className="flex flex-col">
               <p className="text-sm text-center mx-[10px] my-[10px]">
-                Download Application{" "}
+                Download Application{' '}
               </p>
               <div className="flex flex-row items-center justify-center my-[10px]">
                 <div className="mr-2">

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { useSession } from "next-auth/react";
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export const MiniProfile = () => {
   const { data } = useSession();
@@ -7,7 +7,7 @@ export const MiniProfile = () => {
   return (
     <div className="flex flex-row items-center justify-between mb-[10px]">
       <img
-        src={data?.user?.image || "/images/avatars/default.png"}
+        src={data?.user?.image || '/images/avatars/default.png'}
         alt="gfg"
         className="rounded-full w-14 h-14"
       />
@@ -16,7 +16,7 @@ export const MiniProfile = () => {
           {data?.user?.name}
         </div>
         <p className="text-sm font-sans font-normal text-gray-400  dark:text-gray-300 line-h-sm">
-          {data?.user?.email.split("@")[0]}
+          {data?.user?.email.split('@')[0]}
         </p>
       </div>
 

@@ -1,8 +1,8 @@
-import { UserCircleIcon, BookmarkIcon } from "@heroicons/react/outline";
-import { SettingIcon, ChangeIcon } from "../";
-import { Menu } from "@headlessui/react";
-import Link from "next/link";
-import { signOut } from "next-auth/react";
+import { UserCircleIcon, BookmarkIcon } from '@heroicons/react/outline';
+import { SettingIcon, ChangeIcon } from '../';
+import { Menu } from '@headlessui/react';
+import Link from 'next/link';
+import { signOut } from 'next-auth/react';
 
 export const ProfileModel = () => {
   return (
@@ -14,7 +14,7 @@ export const ProfileModel = () => {
             {({ active }) => (
               <div
                 className={`cursor-pointer transition ${
-                  active ? "bg-gray-50" : ""
+                  active ? 'bg-gray-50' : ''
                 } `}
               >
                 <div className="px-4 py-2 flex justify-start font-normal text-sm line-sm font-sans text-gray-900 items-center">
@@ -31,7 +31,7 @@ export const ProfileModel = () => {
             {({ active }) => (
               <div
                 className={`cursor-pointer transition ${
-                  active ? "bg-gray-50" : ""
+                  active ? 'bg-gray-50' : ''
                 } `}
               >
                 <div className="px-4 py-2 flex justify-start font-normal text-sm line-sm font-sans text-gray-900 items-center">
@@ -48,7 +48,7 @@ export const ProfileModel = () => {
             {({ active }) => (
               <div
                 className={`cursor-pointer transition ${
-                  active ? "bg-gray-50" : ""
+                  active ? 'bg-gray-50' : ''
                 } `}
               >
                 <div className="px-4 py-2 flex justify-start font-normal text-sm line-sm font-sans text-gray-900 items-center">
@@ -64,7 +64,7 @@ export const ProfileModel = () => {
             {({ active }) => (
               <div
                 className={`cursor-pointer transition ${
-                  active ? "bg-gray-50" : ""
+                  active ? 'bg-gray-50' : ''
                 } `}
               >
                 <div className="px-4 py-2 flex justify-start font-normal text-sm line-sm font-sans text-gray-900 items-center">
@@ -80,7 +80,7 @@ export const ProfileModel = () => {
             {({ active }) => (
               <div
                 className={`cursor-pointer transition ${
-                  active ? "bg-gray-50" : ""
+                  active ? 'bg-gray-50' : ''
                 } `}
               >
                 <button

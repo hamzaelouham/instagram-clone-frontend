@@ -4,11 +4,11 @@ import {
   PlusCircleIcon,
   SearchIcon,
   UserGroupIcon,
-} from "@heroicons/react/outline";
-import { Activity, Header, LoadingComponent, Navigation } from "../components";
-import { HomeIcon } from "@heroicons/react/solid";
-import type { NextPage } from "next";
-import Head from "next/head";
+} from '@heroicons/react/outline';
+import { Activity, Header, LoadingComponent, Navigation } from '../components';
+import { HomeIcon } from '@heroicons/react/solid';
+import type { NextPage } from 'next';
+import Head from 'next/head';
 
 const InstaPage: NextPage = () => {
   return (

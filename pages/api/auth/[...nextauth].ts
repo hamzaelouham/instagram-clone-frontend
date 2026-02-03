@@ -1,17 +1,17 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { Login } from "../../../utils/";
-import { JWT } from "next-auth/jwt";
-import { User } from "../../../utils/types/next-auth";
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { Login } from '../../../utils/';
+import { JWT } from 'next-auth/jwt';
+import { User } from '../../../utils/types/next-auth';
 
 export default NextAuth({
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "email", type: "email", placeholder: "email" },
-        password: { label: "password", type: "password" },
+        email: { label: 'email', type: 'email', placeholder: 'email' },
+        password: { label: 'password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials) return null;
@@ -32,7 +32,7 @@ export default NextAuth({
     }),
   ],
   pages: {
-    signIn: "/auth/",
+    signIn: '/auth/',
   },
   callbacks: {
     //@ts-ignore
@@ -60,6 +60,6 @@ export default NextAuth({
   },
 
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
   },
 });

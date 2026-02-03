@@ -1,8 +1,8 @@
-import React from "react";
-import { useQuery } from "@apollo/client";
-import { InView } from "react-intersection-observer";
-import { Post, Spinner } from "./";
-import { GET_POST } from "../utils/queries";
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { InView } from 'react-intersection-observer';
+import { Post, Spinner } from './';
+import { GET_POST } from '../utils/queries';
 
 export const Posts = () => {
   const { loading, error, data, networkStatus, fetchMore } = useQuery(
@@ -54,7 +54,7 @@ export const Posts = () => {
         />
       ) : (
         <p className="my-10 text-center font-medium">
-          You've reached the end!{" "}
+          You've reached the end!{' '}
         </p>
       )}
     </div>

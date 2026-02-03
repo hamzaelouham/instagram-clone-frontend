@@ -1,5 +1,5 @@
-import * as bcrypt from "bcrypt";
-import { sign, verify } from "jsonwebtoken";
+import * as bcrypt from 'bcrypt';
+import { sign, verify } from 'jsonwebtoken';
 
 export const Hash = async (password: string, salt: number) => {
   return await bcrypt.hash(password, salt);
@@ -11,7 +11,7 @@ export const Compare = async (password: string, hashPassword: string) => {
 
 export function createToken(payload: string | Buffer | object) {
   return sign(payload, process.env.JWT_SECRET!, {
-    expiresIn: "1d",
+    expiresIn: '1d',
   });
 }
 

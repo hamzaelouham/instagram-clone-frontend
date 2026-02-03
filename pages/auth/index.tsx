@@ -1,12 +1,13 @@
-import React from "react";
-import type { NextPage } from "next";
-import Link from "next/link";
-import { Formik, Form, Field } from "formik";
-import * as yup from "yup";
-import Head from "next/head";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
-import toast from "react-hot-toast";
+import React from 'react';
+import type { NextPage } from 'next';
+import Link from 'next/link';
+import { Formik, Form, Field } from 'formik';
+import * as yup from 'yup';
+import Head from 'next/head';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import toast from 'react-hot-toast';
+import { restartWsConnection } from '../../utils/apollo';
 
 interface formValues {
   email: string;
@@ -19,7 +20,7 @@ const Login: NextPage = () => {
   const onSubmit = async (values: formValues) => {
     try {
       setLoading(true);
-      const res = await signIn("credentials", {
+      const res = await signIn('credentials', {
         email: values.email,
         password: values.password,
         redirect: false,
@@ -27,14 +28,17 @@ const Login: NextPage = () => {
       });
 
       if (!res?.error && res?.ok) {
-        toast.success("Successfully logged!");
+        toast.success('Successfully logged!');
+
+        // Restart WebSocket connection with new auth credentials
+        restartWsConnection();
 
         router.push(res.url as string);
       } else {
-        toast.error("login failed !");
+        toast.error('login failed !');
       }
     } catch (e) {
-      toast.error("login failed !");
+      toast.error('login failed !');
     } finally {
       setLoading(false);
     }
@@ -46,8 +50,8 @@ const Login: NextPage = () => {
   });
 
   const initialValues: formValues = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
 
   return (
@@ -101,17 +105,18 @@ const Login: NextPage = () => {
                       />
                       <button
                         type="submit"
-                        className={`insta-btn mx-8 mt-2 mb-2  ${!!errors.email ||
+                        className={`insta-btn mx-8 mt-2 mb-2  ${
+                          !!errors.email ||
                           !touched.email ||
                           !touched.password ||
                           !!errors.password ||
                           loading
-                          ? "cursor-not-allowed"
-                          : "acive-btn"
-                          }`}
+                            ? 'cursor-not-allowed'
+                            : 'acive-btn'
+                        }`}
                         disabled={!!errors.email || !!errors.password}
                       >
-                        {loading ? "loading..." : "Log In"}
+                        {loading ? 'loading...' : 'Log In'}
                       </button>
 
                       <div className="flex flex-row justify-center items-center mx-[40px] mt-[10px] mb-[18px]">
@@ -162,7 +167,7 @@ const Login: NextPage = () => {
             </div>
             <div className="flex flex-col">
               <p className="text-sm text-center mx-[10px] my-[10px]">
-                Download Application{" "}
+                Download Application{' '}
               </p>
               <div className="flex flex-row items-center justify-center my-[10px]">
                 <div className="mr-2">
