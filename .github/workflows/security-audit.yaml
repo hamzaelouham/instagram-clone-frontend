@@ -62,7 +62,7 @@ jobs:
         if: steps.check.outputs.has_issues == 'true'
         uses: peter-evans/create-issue-from-file@v5
         with:
-          title: "Bi-Weekly Security Audit Findings"
+          title: "🚨 Bi-Weekly Security Audit Findings"
           content-filepath: trivy-report.txt
           labels: |
             security
