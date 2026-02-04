@@ -1,0 +1,71 @@
+name: Bi-Weekly Security Audit
+
+on:
+  schedule:
+    - cron: "0 3 1,15 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  scan-and-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # ---- Run Trivy scan ----
+      - name: Run Trivy vulnerability scan
+        id: trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: fs
+          format: table
+          output: trivy-report.txt
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+          exit-code: '0'
+
+      # ---- Detect if issues were found ----
+      - name: Check for vulnerabilities
+        id: check
+        run: |
+          # If the report is almost empty or only contains headers, no issues found.
+          # We use a safer check looking for the table content rows.
+          if grep -q "+--+" trivy-report.txt; then
+            echo "has_issues=true" >> $GITHUB_OUTPUT
+            echo "Found vulnerabilities."
+          else
+            echo "has_issues=false" >> $GITHUB_OUTPUT
+            echo "No vulnerabilities found."
+          fi
+
+      # ---- Create/Update GitHub Issue ----
+      - name: Create Security Issue
+        if: steps.check.outputs.has_issues == 'true'
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Bi-Weekly Security Audit Findings"
+          content-filepath: trivy-report.txt
+          labels: |
+            security
+            vulnerability
+            automated-report
+
